@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum  HospitalTypeEnum {
 
     GOVERNOMENT,
-    PRIVATE
+    PRIVATE;
 
+    @JsonValue
+    public int toValue(){
+        return this.ordinal();
+    }
 
 }
