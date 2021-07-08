@@ -61,4 +61,19 @@ public class Hospital {
         this.hospitalStaticConfig = createAndUpdateHospitalDto.getHospitalStaticConfig();
         this.isActive = true;
     }
+
+    public static Hospital dumpData() {
+        Hospital hospital=new Hospital();
+        hospital.setName("مستشفى عدن العام");
+        hospital.setDescription("قسم خاص بامراض القلب");
+        hospital.setId(UUID.randomUUID());
+        hospital.setIsActive(true);
+        hospital.setLatitude("");
+        hospital.setLongitude("");
+        hospital.setType(HospitalTypeEnum.GOVERNOMENT);
+        hospital.setHospitalStaticConfig(new HospitalStaticConfig());
+        return hospital;
+    }
+
+
 }
