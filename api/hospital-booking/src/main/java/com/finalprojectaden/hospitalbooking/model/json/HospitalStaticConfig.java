@@ -10,8 +10,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HospitalStaticConfig {
 
-    private List<String> images=new ArrayList<>();
-    private List<HospitalContactInfo> hospitalContactInfos=new ArrayList<>();
+    private String coverImage = "";
+    private List<String> images = new ArrayList<>();
+    private List<HospitalContactInfo> hospitalContactInfos = new ArrayList<>();
 
 
 }
