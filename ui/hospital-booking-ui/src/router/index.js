@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import HospitalDetailScreenAdmin from "../screen/AdminHome/HospitalDetailScreenAdmin/HospitalDetailScreenAdmin";
 import AdminHome from "../screen/AdminHome/AdminHome";
 import HospitalListScreenAdmin from "../screen/AdminHome/HospitalListScreenAdmin/HospitalListScreenAdmin";
-import SectionScreenAdmin from "../screen/AdminHome/SectionScreenAdmin/SectionScreenAdmin";
+import SectionListScreenAdmin from "../screen/AdminHome/SectionListScreenAdmin/SectionListScreenAdmin";
 
 Vue.use(VueRouter);
 
@@ -21,7 +21,7 @@ const routes = [
             {
                 path: 'sections',
                 name: 'sections',
-                component: SectionScreenAdmin
+                component: SectionListScreenAdmin
             },
             {
                 path: "hospitals/:id",

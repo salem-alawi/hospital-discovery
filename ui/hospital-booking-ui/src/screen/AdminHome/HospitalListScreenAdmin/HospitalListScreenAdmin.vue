@@ -1,23 +1,15 @@
 <template>
+
+
     <div class="HospitalListScreenAdmin">
+
         <v-row>
             <v-col v-for="hos in allHospitals" :key="hos.id">
                 <HospitalCard :hospital=hos @openMap="(item)=> openLocation(item)"/>
             </v-col>
         </v-row>
 
-        <v-fab-transition>
-            <v-btn
-                    fab
-                    large
-                    dark
-                    bottom
-                    left
-                    class="v-btn--example"
-            >
-                <v-icon>{{ activeFab.icon }}</v-icon>
-            </v-btn>
-        </v-fab-transition>
+
         <v-dialog v-model="locationDialog" max-width="1100">
             <v-card>
                 <v-card-text>
@@ -44,9 +36,24 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-btn
+                color="red"
+                fab
+                large
+                class="v-btn--example"
+        >
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
     </div>
 </template>
-
+<style>
+    /* This is for documentation purposes and will not be needed in your application */
+    .v-btn--example {
+        bottom: 20px;
+        left: 20px;
+        position: fixed;
+    }
+</style>
 <script>
     import HospitalCard from "../../../components/HospitalCard/HospitalCard";
     import {mapActions, mapGetters} from 'vuex';
@@ -55,6 +62,9 @@
     export default {
 
         data: () => ({
+                fab: false,
+                hidden: false,
+                tabs: null,
                 locationDialog: false,
                 locationUrl: '',
                 dd: {
@@ -90,18 +100,7 @@
         ,
         computed: {
             ...mapGetters(['allHospitals']),
-            activeFab() {
-                switch (this.tabs) {
-                    case 'one':
-                        return {color: 'success', icon: 'mdi-share-variant'}
-                    case 'two':
-                        return {color: 'red', icon: 'mdi-pencil'}
-                    case 'three':
-                        return {color: 'green', icon: 'mdi-chevron-up'}
-                    default:
-                        return {}
-                }
-            }
+
         },
         props: {}
         ,

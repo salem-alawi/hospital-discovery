@@ -1,21 +1,12 @@
 <template>
     <div class="HospitalCard">
 
-
         <v-card
                 class="mx-auto my-12"
-                max-width="374"
+                max-width="274"
         >
-<!--            <template slot="progress">-->
-<!--                <v-progress-linear-->
-<!--                        color="deep-purple"-->
-<!--                        height="10"-->
-<!--                        indeterminate-->
-<!--                ></v-progress-linear>-->
-<!--            </template>-->
-
             <v-img
-                    height="250"
+                    height="150"
                     :src="hospital.hospitalStaticConfig.coverImage"
             ></v-img>
 
@@ -24,12 +15,6 @@
                 mdi-map
             </v-icon>
             <v-card-title>{{hospital.name}}</v-card-title>
-
-
-
-<!--            <v-card-text>-->
-
-<!--            </v-card-text>-->
 
             <v-divider class="mx-4"></v-divider>
 
@@ -56,14 +41,14 @@
 
     export default {
         props: ['hospital'],
-        data:()=>({}),
+        data: () => ({}),
         computed: {
             // ...mapGetters(['allHospitals'])
         },
-        methods:{
-            openOneHospital(oneHospital){
+        methods: {
+            openOneHospital(oneHospital) {
                 console.log(oneHospital);
-                this.$router.push('/admin/hospitals/'+oneHospital.id);
+                this.$router.push('/admin/hospitals/' + oneHospital.id);
             }
         }
     };

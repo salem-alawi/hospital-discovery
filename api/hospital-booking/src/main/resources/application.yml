@@ -1,4 +1,10 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true # enable support of multipart uploads. [true]
+      file-size-threshold: 30MB # threshold after which files are written to disk. [0B]
+      max-file-size: 30MB # max file size. [1MB]
+      max-request-size: 30MB # max request size. [10MB]
   jpa:
     properties:
       hibernate:
@@ -16,5 +22,4 @@ spring:
       minimum-idle: 10
       idle-timeout: 10000
       maximum-pool-size: 30
-
 
