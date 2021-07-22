@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.cloud.stream.function.StreamBridge;
 
+import java.util.UUID;
+
 @Service
 public class HospitalService {
 
@@ -34,5 +36,11 @@ public class HospitalService {
         this.streamBridge.send("uploadSystemEvent-out-0", eventDto);
 
         return newHospital;
+    }
+
+    public Hospital findOneById(UUID hospitalId) throws Exception {
+
+        return this.hospitalRepository.findById(hospitalId).orElseThrow(()-> new Exception("can't find hospital"));
+
     }
 }

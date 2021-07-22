@@ -32,10 +32,11 @@ public class SectionControllerAdmin extends AdminBaseController {
 
     @GetMapping("/sections/{id}")
     public ResponseEntity findOneByIdAdmin(@PathVariable("id") UUID sectionId) throws ItemNotFoundException {
-
         return new ResponseEntity(this.sectionService.findOneById(sectionId), HttpStatus.OK);
-
     }
+
+//    @PutMapping("/sections/{id}")
+//    public ResponseEntity updateOneSection
 
 
 

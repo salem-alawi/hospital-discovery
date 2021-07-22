@@ -8,10 +8,10 @@
             </v-col>
         </v-row>
 
-        <v-dialog v-model="createSectionDialog" max-width="800">
+        <v-dialog v-model="createSectionDialog" max-width="600">
             <v-sheet
                     class="pa-12"
-                    color="grey lighten-3"
+                    color="grey lighten -3"
             >
                 <v-content>
 
@@ -47,10 +47,18 @@
                                 </div>
                             </div>
                         </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="4">
+                            <v-text-field
+                                    v-model="name"
+                                    label="اسم القسم"
+                                    required
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
                         <v-col>
-                            <v-btn depressed>
-                                Normal
-                            </v-btn>
                             <v-btn
                                     @click="createNewSection()"
                                     depressed
@@ -60,15 +68,7 @@
                             </v-btn>
 
                         </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <v-text-field
-                                    v-model="name"
-                                    label="اسم القسم"
-                                    required
-                            ></v-text-field>
-                        </v-col>
+
                     </v-row>
                 </v-content>
 

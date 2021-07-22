@@ -1,5 +1,8 @@
 package com.finalprojectaden.hospitalbooking.model;
 
+import com.finalprojectaden.hospitalbooking.dto.admin.doctors.CreateNewDoctor;
+import com.finalprojectaden.hospitalbooking.dto.admin.doctors.UpdateDoctor;
+import com.finalprojectaden.hospitalbooking.model.json.DoctorCertificationJson;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,5 +41,24 @@ public class Doctor {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Type(type = "json")
+    @Column(name = "certification", columnDefinition = "json")
+    private DoctorCertificationJson certifications;
 
+    public Doctor(CreateNewDoctor createNewDoctor, Hospital hospital, HospitalSection hospitalSection) {
+        this.name=createNewDoctor.getName();
+        this.about=createNewDoctor.getAbout();
+        this.hospitalSection=hospitalSection;
+        this.hospital=hospital;
+        this.certifications=createNewDoctor.getCertifications();
+        this.isActive=true;
+
+    }
+
+    public void update(UpdateDoctor updateDoctor, HospitalSection hospitalSection) {
+        this.name = name;
+        this.about = updateDoctor.getAbout();
+        this.hospitalSection = hospitalSection;
+        this.certifications = updateDoctor.getCertifications();
+    }
 }
