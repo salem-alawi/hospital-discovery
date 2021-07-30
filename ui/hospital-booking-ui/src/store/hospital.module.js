@@ -7,6 +7,8 @@ const getters = {
 
 const actions = {
     loadAllHospitals({commit}, data) {
+
+        data = data.filter(data => data.isActive == true);
         commit('loadAllHospitalMutation', data);
     },
     updateOneHospital
@@ -28,7 +30,7 @@ const mutations = {
         store.hospitals = data;
     }
     ,
-    updateOneHospitalMutation (state, data) {
+    updateOneHospitalMutation(state, data) {
         state.hospitals.splice(data.index, 1, data.item);
     },
     deleteOneHospitalMutation(state, id) {

@@ -70,7 +70,7 @@ public class Hospital {
         hospital.setIsActive(true);
         hospital.setLatitude("");
         hospital.setLongitude("");
-        hospital.setType(HospitalTypeEnum.GOVERNOMENT);
+        hospital.setType(HospitalTypeEnum.GOVERNMENT);
         hospital.setHospitalStaticConfig(new HospitalStaticConfig());
         return hospital;
     }

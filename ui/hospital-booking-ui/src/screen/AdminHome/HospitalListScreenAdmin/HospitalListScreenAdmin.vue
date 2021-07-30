@@ -9,6 +9,8 @@
             </v-col>
         </v-row>
 
+        <CreateNewHospital @closeDia="createClose" :show="createHospitalDialog"/>
+
 
         <v-dialog v-model="locationDialog" max-width="1100">
             <v-card>
@@ -37,6 +39,7 @@
             </v-card>
         </v-dialog>
         <v-btn
+                @click="createHospitalDialog=true"
                 color="red"
                 fab
                 large
@@ -58,10 +61,12 @@
     import HospitalCard from "../../../components/HospitalCard/HospitalCard";
     import {mapActions, mapGetters} from 'vuex';
     import axios from 'axios'
+    import CreateNewHospital from "../../../dialogs/CreateNewHospital/CreateNewHospital";
 
     export default {
 
         data: () => ({
+                createHospitalDialog: false,
                 fab: false,
                 hidden: false,
                 tabs: null,
@@ -78,6 +83,11 @@
         ),
         methods: {
             ...mapActions(['loadAllHospitals']),
+            createClose(val) {
+                if (val == false)
+                    this.createHospitalDialog = false;
+
+            },
             openLocation(item) {
                 console.log(JSON.stringify(item, null, 2));
                 //window.open("http://maps.google.com/maps?q=loc:" + item.latitude + "," + item.longitude, "_blank");
@@ -95,6 +105,7 @@
             this.initialize()
         },
         components: {
+            CreateNewHospital,
             HospitalCard
         }
         ,

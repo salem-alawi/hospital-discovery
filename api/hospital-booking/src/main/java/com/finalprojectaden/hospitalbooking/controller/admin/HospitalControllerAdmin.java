@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @CrossOrigin
 @RestController
 public class HospitalControllerAdmin extends AdminBaseController {
@@ -29,6 +31,15 @@ public class HospitalControllerAdmin extends AdminBaseController {
         Hospital hospital = this.hospitalService.createNewHospital(createAndUpdateHospitalDto);
 
         return new ResponseEntity(hospital, HttpStatus.OK);
+    }
+    @DeleteMapping("/hospitals/{id}")
+    public ResponseEntity disableHospital(@PathVariable("id")UUID hospitalId) throws Exception {
+        Hospital hospital=this.hospitalService.findOneById(hospitalId);
+
+        hospital.setIsActive(false);
+        this.hospitalService.save(hospital);
+
+        return new ResponseEntity(HttpStatus.OK);
 
     }
 
