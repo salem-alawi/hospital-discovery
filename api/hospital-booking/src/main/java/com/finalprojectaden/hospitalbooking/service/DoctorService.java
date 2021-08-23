@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,9 +39,11 @@ public class DoctorService {
     }
 
 
-    public Page<Doctor> findAllByHospitalId(UUID hospitalId, Pageable pageable) {
 
-        return this.doctorRepository.findAllByHospitalId(hospitalId, pageable);
+
+    public List<Doctor> findAllByHospitalId(UUID hospitalId) {
+
+        return this.doctorRepository.findAllByHospitalId(hospitalId.toString());
     }
 
     public Doctor createNewDoctor(CreateNewDoctor createNewDoctor) throws Exception {

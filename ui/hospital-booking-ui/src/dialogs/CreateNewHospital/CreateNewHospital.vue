@@ -10,11 +10,11 @@
             </div>
             <hr/>
             <div class="CreateNewHospital">
-                <v-row style="padding: 40px">
+                <v-row style="padding: 10px">
                     <v-col
                             class="d-flex child-flex"
                             cols="12">
-                        <v-card style="border-radius: 17px;">
+                        <v-card style="border-radius: 17px;padding: 40px">
                             <v-row no-gutters justify="center" align="center">
                                 <v-col>
                                     <v-file-input
@@ -47,60 +47,116 @@
                                     </div>
                                 </v-col>
                             </v-row>
-                            <v-row>
-                                <v-col cols="lg-4 md-5 sm-11">
-                                    <v-text-field
-                                            style="width: 300px;margin: auto;padding-top: 30px"
-                                            v-model="name"
-                                            label="اسم المستشفى"
-                                            required
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col>
-                                    <v-textarea
-                                            color="lg-8- md-7 sm-11"
-                                            style="padding-right: 100px;padding-left: 100px"
-                                            v-model="description"
-                                            label="وصف المستشفى"
-                                            required
-                                    ></v-textarea>
-                                </v-col>
-                            </v-row>
-                            <v-row style="padding-right: 100px;padding-left: 100px">
+                            <fieldset style="width:100%;padding: 40px;border-radius: 14px;">
+                                <legend><pre style="font-weight: bold">   البيانات الاساسية   </pre></legend>
+                                <v-row>
 
-                                <v-col>
-                                    <v-text-field
-                                            v-model="longitude"
-                                            label="خط الطول"
-                                            required
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col>
-                                    <v-text-field
-                                            v-model="latitude"
-                                            label="خط العرض"
-                                            required
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="lg-4 md-3 sm-0"></v-col>
-                                <v-col cols="lg-4 md-6 sm-12">
-                                    <v-select
-                                            :value="0"
-                                            item-value="value"
-                                            item-text="name"
-                                            :items="type"
-                                            label="Standard"
-                                    ></v-select>
+                                    <v-col cols="lg-4 md-5 sm-11">
+                                        <v-row>
+                                            <v-col>
+                                                <v-text-field
+                                                        style="width: 300px;margin: auto;padding-top: 30px"
+                                                        v-model="name"
+                                                        label="اسم المستشفى"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col>
 
+                                                <v-select
+                                                        :value="0"
+                                                        item-value="value"
+                                                        item-text="name"
+                                                        :items="type"
+                                                        label="نوعه الخدمه"
+                                                ></v-select>
+                                            </v-col>
+                                        </v-row>
+
+                                    </v-col>
+                                    <v-col>
+                                        <v-textarea
+                                                outlined
+                                                v-model="description"
+                                                label="وصف المستشفى"
+                                                required
+                                        ></v-textarea>
+                                    </v-col>
+                                </v-row>
+                            </fieldset>
+                            <fieldset style="width:100%;padding: 40px;border-radius: 14px;margin-top: 20px">
+                                <legend><pre style="font-weight: bold">  معلومات الموقع  </pre></legend>
+                                <v-row>
+                                    <v-col>
+
+                                        <v-row>
+                                            <v-col>
+                                                <v-text-field
+                                                        v-model="longitude"
+                                                        label="خط الطول"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col>
+                                                <v-text-field
+                                                        v-model="latitude"
+                                                        label="خط العرض"
+                                                        required
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+
+                                    </v-col>
+
+<!--                                    <v-col>-->
+<!--                                    <div id="map">-->
+
+<!--                                    </div>-->
+<!--                                    </v-col>-->
+
+                                </v-row>
+                                <!--                                <v-col>-->
+
+
+                            </fieldset>
+
+                            <fieldset style="width:100%;padding: 40px;border-radius: 14px;">
+                                <legend><pre style="font-weight: bold;margin-top: 20px">  بيانات الاتصال  </pre></legend>
+
+                            <v-row>
+                                <v-col>
+                                    <v-text-field
+                                            v-model="contactName"
+                                            label="اسم جهات الاتصال"
+                                            required
+                                    ></v-text-field>
                                 </v-col>
-                                <v-col cols="lg-4 md-3 sm-0"></v-col>
+                                <v-col>
+                                    <v-text-field
+                                            v-model="phoneNumber"
+                                            label="رقم الهاتف"
+                                            required
+                                    ></v-text-field>
+                                </v-col>
                             </v-row>
                             <v-row>
+                                <v-col>
+                                    <v-text-field
+                                            v-model="email"
+                                            label="البريد الالكتروني"
+                                            required
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+                            </fieldset>
+                                <v-row>
+
                                 <v-col class="d-flex justify-center" style="padding-bottom: 30px">
                                     <v-btn
-
                                             color="primary"
                                             @click="saveNewHospitalToApi()"
                                     >
@@ -117,16 +173,27 @@
     </v-dialog>
 </template>
 
+<style>
+    #map {
+        width: 100%;
+        height: 480px;
+    }
+</style>
 <script>
 
     import UploadFilesService from "../../service/UploadFilesService";
     import HospitalService from "../../service/HospitalService";
+    import LocationPicker from "location-picker";
+
+    // var mp = undefined;
 
     export default {
         mounted() {
-            setInterval(() => {
-
-            }, 2000)
+        new LocationPicker('map', {
+                setCurrentPosition: true, // You can omit this, defaults to true
+            }, {
+                zoom: 15 // You can set any google map options here, zoom defaults to 15
+            });
         },
         data: () => {
             return {
@@ -145,7 +212,10 @@
                 }, {
                     name: 'خاص',
                     value: 1
-                }]
+                }],
+                contactName:'',
+                email:'',
+                phoneNumber: ''
             }
         },
         methods: {
@@ -171,7 +241,8 @@
                     longitude: this.longitude,
                     latitude: this.latitude,
                     hospitalStaticConfig: {
-                        coverImage: this.coverImage
+                        coverImage: this.coverImage,
+                        hospitalContactInfos: [{name:this.contactName,phoneNumber:this.phoneNumber,email:this.email}]
                     }
 
 

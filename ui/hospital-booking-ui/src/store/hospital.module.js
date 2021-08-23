@@ -8,7 +8,7 @@ const getters = {
 const actions = {
     loadAllHospitals({commit}, data) {
 
-        data = data.filter(data => data.isActive == true);
+        // data = data.filter(data => data.isActive == true);
         commit('loadAllHospitalMutation', data);
     },
     updateOneHospital

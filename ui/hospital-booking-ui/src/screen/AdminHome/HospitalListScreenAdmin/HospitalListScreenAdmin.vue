@@ -2,13 +2,18 @@
 
 
     <div class="HospitalListScreenAdmin">
+        <div class="container--fluid">
 
-        <v-row>
-            <v-col v-for="hos in allHospitals" :key="hos.id">
-                <HospitalCard :hospital=hos @openMap="(item)=> openLocation(item)"/>
-            </v-col>
-        </v-row>
+            <div class="d-flex flex-wrap justify-center">
+                <div   style="margin: 10px"  v-for="hos in allHospitals" :key="hos.id" >
 
+                    <HospitalCard :hospital=hos @openMap="(item)=> openLocation(item)"/>
+
+                </div>
+
+            </div>
+
+        </div>
         <CreateNewHospital @closeDia="createClose" :show="createHospitalDialog"/>
 
 
@@ -61,8 +66,8 @@
     import HospitalCard from "../../../components/HospitalCard/HospitalCard";
     import {mapActions, mapGetters} from 'vuex';
     import axios from 'axios'
-    import CreateNewHospital from "../../../dialogs/CreateNewHospital/CreateNewHospital";
-
+    import CreateNewHospital from '../../../dialogs/CreateNewHospital/CreateNewHospital';
+    
     export default {
 
         data: () => ({
@@ -102,7 +107,26 @@
 
         },
         mounted() {
-            this.initialize()
+            this.initialize();
+
+
+
+
+
+
+// axios.get('https://miro.medium.com/max/900/1*OrjCKmou1jT4It5so5gvOA.jpeg',{
+//     responseType: 'blob',
+
+// }).then(response=>{
+//     var blob = response.data;
+//     var a = window.document.createElement('a');
+//     a.href = window.URL.createObjectURL(blob);
+//     a.download ='image_download.jpeg';
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+// });
+
         },
         components: {
             CreateNewHospital,

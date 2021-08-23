@@ -14,5 +14,4 @@ public class HospitalStaticConfig {
     private List<String> images = new ArrayList<>();
     private List<HospitalContactInfo> hospitalContactInfos = new ArrayList<>();
 
-
 }

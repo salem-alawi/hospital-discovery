@@ -6,6 +6,10 @@ class HospitalService {
         return http.post('admin/hospitals', createNewHospitalDto);
     }
 
+    findOneHospital(id){
+        return http.get('/admin/hospitals/'+id);
+    }
+
     removeHospital(id) {
         return http.delete('admin/hospitals/' + id);
     }

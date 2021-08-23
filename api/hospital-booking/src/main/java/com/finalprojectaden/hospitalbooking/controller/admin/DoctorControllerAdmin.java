@@ -34,12 +34,7 @@ public class DoctorControllerAdmin extends AdminBaseController {
         return new ResponseEntity(doctor, HttpStatus.OK);
     }
 
-    @GetMapping("/hospitals/{id}/doctors")
-    public ResponseEntity findAllDoctorsByHospitalId(Pageable pageable, @PathVariable("id") UUID hospitalId) {
 
-        Page<Doctor> hospitalDoctor = this.doctorService.findAllByHospitalId(hospitalId, pageable);
-        return new ResponseEntity(hospitalDoctor, HttpStatus.OK);
-    }
 
 
 }

@@ -9,6 +9,13 @@ class SectionService {
             coverImage: imageCover
         });
     }
+
+    findAllSectionByHospitalId(id){
+
+    return http.get('admin/hospitals/'+id+'/sections');
+
+    }
+
 }
 
 export default new SectionService();
