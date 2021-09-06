@@ -76,7 +76,7 @@ public class HospitalBookingApplication {
                 doctor.setHospital(hospital);
                 doctor.setName("محمد مصطفى");
                 doctor.setAbout("دكتور باطني");
-                doctor.setHospitalSection(hospitalSection);
+                doctor.setHospitalSectionId(hospitalSection);
                 doctor.setCertifications(new DoctorCertificationJson());
                 doctor.setIsActive(true);
                 doctorRepository.save(doctor);

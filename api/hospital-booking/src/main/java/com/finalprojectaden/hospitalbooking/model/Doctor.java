@@ -39,7 +39,7 @@ public class Doctor {
 
     @ManyToOne
     @JoinColumn(name = "hospital_section_id")
-    private HospitalSection hospitalSection;
+    private HospitalSection hospitalSectionId;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -48,11 +48,11 @@ public class Doctor {
     @Column(name = "certification", columnDefinition = "json")
     private DoctorCertificationJson certifications;
 
-    public Doctor(CreateNewDoctor createNewDoctor, Hospital hospital, HospitalSection hospitalSection) {
+    public Doctor(CreateNewDoctor createNewDoctor, Hospital hospital, HospitalSection hospitalSectionId) {
         this.name = createNewDoctor.getName();
         this.about = createNewDoctor.getAbout();
         this.image = createNewDoctor.getImage();
-        this.hospitalSection = hospitalSection;
+        this.hospitalSectionId = hospitalSectionId;
         this.hospital = hospital;
         this.certifications = createNewDoctor.getCertifications();
         this.isActive = true;
@@ -60,9 +60,9 @@ public class Doctor {
     }
 
     public void update(UpdateDoctor updateDoctor, HospitalSection hospitalSection) {
-        this.name = name;
+        this.name = updateDoctor.getName();
         this.about = updateDoctor.getAbout();
-        this.hospitalSection = hospitalSection;
+        this.hospitalSectionId = hospitalSection;
         this.certifications = updateDoctor.getCertifications();
     }
 }

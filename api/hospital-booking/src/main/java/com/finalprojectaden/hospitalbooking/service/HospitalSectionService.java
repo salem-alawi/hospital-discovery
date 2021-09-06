@@ -33,7 +33,14 @@ public class HospitalSectionService {
         HospitalSection hospitalSection= this.findOneById(hospitalSectionId);
 
 
-        return  this.doctorService.findCountByHospitalISectionId(hospitalSection.getSection().getId());
+        return  this.doctorService.findCountByHospitalISectionId(hospitalSection.getId());
+
+    }
+
+    public void removeById(UUID hospitalSectionId) {
+
+        this.doctorService.setDoctorHospitalNullByHospitalSectionId(hospitalSectionId);
+        this.hospitalSectionRepository.deleteById(hospitalSectionId);
 
     }
 }

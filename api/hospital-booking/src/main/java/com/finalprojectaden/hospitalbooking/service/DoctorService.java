@@ -39,8 +39,6 @@ public class DoctorService {
     }
 
 
-
-
     public List<Doctor> findAllByHospitalId(UUID hospitalId) {
 
         return this.doctorRepository.findAllByHospitalId(hospitalId.toString());
@@ -51,18 +49,25 @@ public class DoctorService {
         Hospital hospital = this.hospitalService.findOneById(createNewDoctor.getHospitalId());
         HospitalSection hospitalSection = this.hospitalSectionService.findOneById(createNewDoctor.getHospitalSectionId());
 
-
         Doctor doctor = new Doctor(createNewDoctor, hospital, hospitalSection);
-
         return this.doctorRepository.save(doctor);
 
     }
 
+    public Long findCountByHospitalISectionId(UUID sectionId) {
 
-    public Long findCountByHospitalISectionId( UUID sectionId) {
+        return this.doctorRepository.findCountByHospitalSectionId(sectionId.toString());
 
-        return this.doctorRepository.findCountByHospitalSectionId(sectionId);
+    }
 
+    public void setDoctorHospitalNullByHospitalSectionId(UUID hospitalSectionId) {
+
+        List<Doctor> doctorList = this.doctorRepository.findAllByHospitalSectionId(hospitalSectionId.toString());
+
+        doctorList.forEach((doctor -> {
+            doctor.setHospitalSectionId(null);
+        }));
+        doctorRepository.saveAll(doctorList);
 
     }
 }

@@ -19,7 +19,7 @@ public class HospitalSection {
     @GeneratedValue(generator = "UUID")
     @Type(type = "uuid-char")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "user_id", updatable = false, nullable = false)
+    @Column(name = "hospitalSectionId", updatable = false, nullable = false)
     private UUID id;
 
     @ManyToOne
