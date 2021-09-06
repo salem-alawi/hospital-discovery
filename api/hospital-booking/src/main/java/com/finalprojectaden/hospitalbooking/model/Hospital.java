@@ -53,6 +53,10 @@ public class Hospital {
 
 
     public Hospital(CreateAndUpdateHospitalDto createAndUpdateHospitalDto) {
+        copyHospitalDto(createAndUpdateHospitalDto);
+    }
+
+    private void copyHospitalDto(CreateAndUpdateHospitalDto createAndUpdateHospitalDto) {
         this.name = createAndUpdateHospitalDto.getName();
         this.description = createAndUpdateHospitalDto.getDescription();
         this.longitude = createAndUpdateHospitalDto.getLongitude();
@@ -76,4 +80,13 @@ public class Hospital {
     }
 
 
+
+    public void update(CreateAndUpdateHospitalDto createAndUpdateHospitalDto) {
+        copyHospitalDto(createAndUpdateHospitalDto);
+    }
+
+    public void disable() {
+
+        this.isActive=false;
+    }
 }

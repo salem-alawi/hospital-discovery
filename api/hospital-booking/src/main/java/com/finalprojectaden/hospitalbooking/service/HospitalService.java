@@ -48,4 +48,23 @@ public class HospitalService {
 
         this.hospitalRepository.save(hospital);
     }
+
+    public void updateHospital(UUID hospitalId, CreateAndUpdateHospitalDto createAndUpdateHospitalDto) throws Exception {
+
+        Hospital hospital = this.findOneById(hospitalId);
+
+        hospital.update(createAndUpdateHospitalDto);
+
+        this.hospitalRepository.save(hospital);
+    }
+
+    public void disableHospital(UUID hospitalId) throws Exception {
+
+        Hospital hospital = this.findOneById(hospitalId);
+        hospital.disable();
+        this.hospitalRepository.save(hospital);
+
+
+    }
+
 }

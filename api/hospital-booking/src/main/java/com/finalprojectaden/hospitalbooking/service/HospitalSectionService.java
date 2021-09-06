@@ -15,13 +15,25 @@ public class HospitalSectionService {
     @Autowired
     private HospitalSectionRepository hospitalSectionRepository;
 
+    @Autowired
+    private DoctorService doctorService;
+
+
     public HospitalSection findOneById(UUID hospitalSectionId) throws Exception {
         return hospitalSectionRepository.findById(hospitalSectionId).orElseThrow(()-> new Exception("can't find hospital section"));
     }
 
     public List<HospitalSection> findAllByHospitalId(UUID hospitalId){
         return this.hospitalSectionRepository.findAllByHospitalId(hospitalId.toString());
-
     }
 
+
+    public Long findDoctorCountByHospitalIdAndSectionId( UUID hospitalSectionId) throws Exception {
+
+        HospitalSection hospitalSection= this.findOneById(hospitalSectionId);
+
+
+        return  this.doctorService.findCountByHospitalISectionId(hospitalSection.getSection().getId());
+
+    }
 }

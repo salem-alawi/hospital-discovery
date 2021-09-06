@@ -17,5 +17,7 @@ public interface DoctorRepository extends PagingAndSortingRepository<Doctor, UUI
     @Query(value = "select * from doctors where hospital_id=:hospitalId",nativeQuery = true)
     List<Doctor> findAllByHospitalId(String  hospitalId);
 
+    @Query(value = "select count(*) from doctors where  hospital_section_id=:hospitalSectionId ",nativeQuery = true)
+    Long findCountByHospitalSectionId(UUID hospitalSectionId);
 
 }

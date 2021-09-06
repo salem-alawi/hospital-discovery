@@ -11,6 +11,7 @@ public class CreateNewDoctor {
 
     private String name;
     private String about;
+    private String image;
     private UUID hospitalId;
     private UUID hospitalSectionId;
     private DoctorCertificationJson certifications;

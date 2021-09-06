@@ -57,4 +57,12 @@ public class DoctorService {
         return this.doctorRepository.save(doctor);
 
     }
+
+
+    public Long findCountByHospitalISectionId( UUID sectionId) {
+
+        return this.doctorRepository.findCountByHospitalSectionId(sectionId);
+
+
+    }
 }

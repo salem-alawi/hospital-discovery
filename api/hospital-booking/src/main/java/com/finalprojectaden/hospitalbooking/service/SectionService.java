@@ -29,7 +29,7 @@ public class SectionService {
 
     public Section findOneById(UUID sectionId) throws ItemNotFoundException {
 
-        return this.sectionRepository.findById(sectionId).orElseThrow(NOT_FOUND);
+        return this.sectionRepository.findById(sectionId.toString()).orElseThrow(NOT_FOUND);
     }
 
 

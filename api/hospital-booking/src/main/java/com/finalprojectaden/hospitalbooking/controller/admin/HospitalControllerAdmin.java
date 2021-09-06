@@ -52,14 +52,21 @@ public class HospitalControllerAdmin extends AdminBaseController {
 
     }
 
+    @PutMapping("/hospitals/{id}")
+    public ResponseEntity updateHospitalById(@PathVariable("id") UUID hospitalId,
+                                             @RequestBody CreateAndUpdateHospitalDto createAndUpdateHospitalDto) throws Exception {
+
+        this.hospitalService.updateHospital(hospitalId, createAndUpdateHospitalDto);
+
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
+
 
     @DeleteMapping("/hospitals/{id}")
     public ResponseEntity disableHospital(@PathVariable("id") UUID hospitalId) throws Exception {
-        Hospital hospital = this.hospitalService.findOneById(hospitalId);
 
-        hospital.setIsActive(false);
-        this.hospitalService.save(hospital);
-
+        this.hospitalService.disableHospital(hospitalId);
         return new ResponseEntity(HttpStatus.OK);
 
     }

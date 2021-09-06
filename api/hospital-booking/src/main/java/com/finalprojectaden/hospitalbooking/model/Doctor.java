@@ -27,6 +27,9 @@ public class Doctor {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "about")
     private String about;
 
@@ -46,12 +49,13 @@ public class Doctor {
     private DoctorCertificationJson certifications;
 
     public Doctor(CreateNewDoctor createNewDoctor, Hospital hospital, HospitalSection hospitalSection) {
-        this.name=createNewDoctor.getName();
-        this.about=createNewDoctor.getAbout();
-        this.hospitalSection=hospitalSection;
-        this.hospital=hospital;
-        this.certifications=createNewDoctor.getCertifications();
-        this.isActive=true;
+        this.name = createNewDoctor.getName();
+        this.about = createNewDoctor.getAbout();
+        this.image = createNewDoctor.getImage();
+        this.hospitalSection = hospitalSection;
+        this.hospital = hospital;
+        this.certifications = createNewDoctor.getCertifications();
+        this.isActive = true;
 
     }
 

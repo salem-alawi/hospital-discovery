@@ -1,9 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HospitalDetailScreenAdmin from "../screen/AdminHome/HospitalListScreenAdmin/HospitalDetailScreenAdmin/HospitalDetailScreenAdmin";
+import HospitalDetailScreenAdmin
+    from "../screen/AdminHome/HospitalListScreenAdmin/HospitalDetailScreenAdmin/HospitalDetailScreenAdmin";
 import AdminHome from "../screen/AdminHome/AdminHome";
 import HospitalListScreenAdmin from "../screen/AdminHome/HospitalListScreenAdmin/HospitalListScreenAdmin";
 import SectionListScreenAdmin from "../screen/AdminHome/SectionListScreenAdmin/SectionListScreenAdmin";
+import EditHospitalScreen
+    from "@/screen/AdminHome/HospitalListScreenAdmin/HospitalDetailScreenAdmin/EditHospitalScreen/EditHospitalScreen";
 
 Vue.use(VueRouter);
 
@@ -22,6 +25,12 @@ const routes = [
                 path: 'sections',
                 name: 'sections',
                 component: SectionListScreenAdmin
+            },
+            {
+                path: "hospitals/:id/edit",
+                name: "editHospital",
+                component: EditHospitalScreen,
+                props: true
             },
             {
                 path: "hospitals/:id",

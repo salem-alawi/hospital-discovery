@@ -13,6 +13,12 @@ class  DoctorService {
 
     }
 
+    findDoctorCountBySectionId(id,hospitalSectionId){
+
+        return http.get('admin/hospitals/'+id+'/sections/'+hospitalSectionId+'/doctor-count');
+
+    }
+
 }
 
 export default new DoctorService();

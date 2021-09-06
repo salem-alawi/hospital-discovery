@@ -61,7 +61,7 @@ public class HospitalBookingApplication {
                 hospital = hospitalRepository.save(hospital);
 
                 Section section = new Section();
-                section.setCoverImage("https://www.fbmc.sa/wp-content/uploads/2020/09/Internal-Medicine.jpg");
+                section.setCoverImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTEjPuef2mAp3DHNwm8wXbmLjXyc6zyrXKmw&usqp=CAUءذءذ");
                 section.setIsActive(true);
                 section.setName("الباطني");
                 section = sectionRepository.save(section);
