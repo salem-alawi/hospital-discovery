@@ -5,14 +5,14 @@
         class="mx-auto my-12"
         max-width="274"
     >
-      <v-card-title>{{ section.name }}</v-card-title>
+      <v-card-title > <div style="margin: auto">{{ section.name }}</div></v-card-title>
       <v-img
           height="150"
           :src="section.coverImage"
       ></v-img>
       <v-card-title>
+        عدد الاطباء  :
         <ShowDoctorCountBySectionId :hospital-section-id="hospitalSectionId"/>
-        عدد الاطباء
       </v-card-title>
       <v-card-actions>
         <v-icon  style="cursor: pointer" @click="removeHospitalSection()">

@@ -159,16 +159,35 @@
             </div>
 
             <SectionCard v-for="section in sections" :key="section.id"
-                         :section="section.section"   :hospital-section-id="section.id"></SectionCard>
+                         :section="section.section" :hospital-section-id="section.id"></SectionCard>
           </v-expansion-panel-content>
         </v-expansion-panel>
 
         <v-expansion-panel>
           <v-expansion-panel-header>الاطباء</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <ul>
-              <li v-for="doctor in doctors" :key="doctor.id">{{ doctor.name }}</li>
-            </ul>
+            <div class="d-flex justify-end">
+              <v-btn
+
+                  @click="showCreateNewDoctor()"
+                  x-small
+                  color="primary"
+                  dark
+              >
+                اضافة طبيب
+              </v-btn>
+            </div>
+
+            <div v-for="doctor in doctors" :key="doctor.id">
+              <!--              <ul>-->
+              <!--                <li >{{ doctor.name }}</li>-->
+              <!--              </ul>-->
+
+              <DoctorCardAdmin :doctor="doctor"/>
+
+            </div>
+
+
           </v-expansion-panel-content>
         </v-expansion-panel>
 
@@ -180,15 +199,175 @@
         </v-expansion-panel>
 
       </v-expansion-panels>
+
+
+      <v-row justify="center">
+        <v-dialog
+            v-model="createNewDoctorDialog"
+            max-width="290"
+        >
+          <v-card>
+            <v-card-title class="text-h5">
+              <div style="margin: auto">اضافة طبيب</div>
+            </v-card-title>
+            <v-card-text>
+
+              <v-row no-gutters justify="center" align="center">
+                <v-col>
+                  <v-file-input
+                      v-model="file"
+                      style="width: 300px"
+                      show-size
+                      label="اختار الصور"
+                      accept="image/*"
+                      @change="selectImage"
+                  ></v-file-input>
+                </v-col>
+                <v-col cols="4" class="pl-2">
+                  <div v-if="progress">
+                    <div>
+                      <v-progress-linear
+                          v-model="progress"
+                          color="light-blue"
+                          height="25"
+                          reactive
+                      >
+                        <strong>{{ progress }} %</strong>
+                      </v-progress-linear>
+                    </div>
+                  </div>
+
+                </v-col>
+              </v-row>
+
+              <v-text-field
+                  style="margin-top: 20px"
+                  label="اسم الطبيب"
+                  required
+                  v-model="createDoctorName"
+                  hide-details="auto"
+              ></v-text-field>
+
+              <v-textarea
+                  style="margin-top: 20px"
+                  outlined
+                  v-model="createDoctorAbout"
+                  label="معلومات عن الطبيب"
+                  required
+              ></v-textarea>
+              <v-select
+                  item-value="id"
+                  item-text="section.name"
+                  v-model="selectHosptialSectionId"
+                  :items="allHospitalSection"
+                  label="القسم"
+              ></v-select>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="green darken-1"
+                  text
+                  @click="createNewDoctor()"
+
+              >
+                حفظ
+              </v-btn>
+
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+
+
+      <v-row justify="center">
+        <v-dialog
+            v-model="createNewDoctorDialog"
+            max-width="290"
+        >
+          <v-card>
+            <v-card-title class="text-h5">
+              <div style="margin: auto">تعديل طبيب</div>
+            </v-card-title>
+            <v-card-text>
+
+              <v-row no-gutters justify="center" align="center">
+                <v-col>
+                  <v-file-input
+                      v-model="file"
+                      style="width: 300px"
+                      show-size
+                      label="اختار الصور"
+                      accept="image/*"
+                      @change="selectImage"
+                  ></v-file-input>
+                </v-col>
+                <v-col cols="4" class="pl-2">
+                  <div v-if="progress">
+                    <div>
+                      <v-progress-linear
+                          v-model="progress"
+                          color="light-blue"
+                          height="25"
+                          reactive
+                      >
+                        <strong>{{ progress }} %</strong>
+                      </v-progress-linear>
+                    </div>
+                  </div>
+
+                </v-col>
+              </v-row>
+
+              <v-text-field
+                  style="margin-top: 20px"
+                  label="اسم الطبيب"
+                  required
+                  v-model="createDoctorName"
+                  hide-details="auto"
+              ></v-text-field>
+
+              <v-textarea
+                  style="margin-top: 20px"
+                  outlined
+                  v-model="createDoctorAbout"
+                  label="معلومات عن الطبيب"
+                  required
+              ></v-textarea>
+              <v-select
+                  item-value="id"
+                  item-text="section.name"
+                  v-model="selectHosptialSectionId"
+                  :items="allHospitalSection"
+                  label="القسم"
+              ></v-select>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="green darken-1"
+                  text
+                  @click="updateDoctor()"
+
+              >
+                حفظ
+              </v-btn>
+
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+
+
     </v-container>
 
-<!--    <v-btn @click="removeThisHospital">-->
+    <!--    <v-btn @click="removeThisHospital">-->
 
-<!--      remove this hospital-->
+    <!--      remove this hospital-->
 
-<!--    </v-btn>-->
+    <!--    </v-btn>-->
 
-<!--    {{ id }}-->
+    <!--    {{ id }}-->
 
 
   </div>
@@ -208,14 +387,21 @@ import SectionService from "../../../../service/SectionService";
 import SectionCard from "../../../../components/SectionCard/SectionCard";
 import DoctorService from "../../../../service/DoctorService";
 import UploadFilesService from "@/service/UploadFilesService";
+import DoctorCardAdmin from "@/components/DoctorCard/DoctorCardAdmin";
+import HospitalSectionService from "@/service/HospitalSectionService";
 
 
 export default {
-  components: {SectionCard},
+  components: {SectionCard, DoctorCardAdmin},
   props: ['id'],
   data: () => {
 
     return {
+      selectHosptialSectionId: 0,
+      allHospitalSection: [],
+      createDoctorName: '',
+      createDoctorAbout: '',
+      createNewDoctorDialog: false,
       dia: false,
       file: null,
       currentImage: undefined,
@@ -228,8 +414,6 @@ export default {
       contactName: '',
       email: '',
       phoneNumber: '',
-
-
       panel: [1, 1],
       loaded: false,
       type: [{
@@ -241,13 +425,40 @@ export default {
       }],
       hospital: null,
       sections: [],
-      doctors: []
+      doctors: [],
+      currentUpdateDoctorId: undefined
     }
   },
   methods: {
+    updateDoctor(){
+
+      // DoctorService.updateDoctor({}).then((resp)=>{
+      //
+      // });
+
+    },
+    showCreateNewDoctor() {
+      this.createNewDoctorDialog = true;
+    },
     showEditHospitalPage() {
 
       this.$router.push('/admin/hospitals/' + this.hospital.id + '/edit');
+
+    },
+    createNewDoctor() {
+      DoctorService.createNewDoctor({
+        name: this.createDoctorName,
+        about: this.createDoctorAbout,
+        image: this.coverImage,
+        hospitalSectionId: this.selectHosptialSectionId
+      }).then((resp) => {
+
+        if(resp.status===200){
+          this.createNewDoctorDialog=false;
+          this.initialize()
+        }
+
+      });
 
     },
     upload() {
@@ -292,7 +503,6 @@ export default {
       });
 
       SectionService.findAllSectionByHospitalId(this.id).then(resp => {
-        console.log(resp)
         if (resp.status == 200)
           this.sections = resp.data;
       })
@@ -320,7 +530,14 @@ export default {
   },
   mounted() {
     this.initialize();
+    HospitalSectionService.findAllByHospitalId(this.id).then(resp => {
 
+      if (resp.status == 200)
+        this.allHospitalSection = resp.data;
+
+
+      console.log(JSON.stringify(resp.data,null,2));
+    });
   }
 };
 </script>
