@@ -12,4 +12,4 @@ class HospitalSectionService {
 
 }
 
-export default new HospitalSectionService();
+export default new HospitalSectionService();        

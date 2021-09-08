@@ -81,6 +81,14 @@ public class HospitalControllerAdmin extends AdminBaseController {
 
     }
 
+    @PostMapping("/hospitals/{id}/sections/{sectionId}")
+    public ResponseEntity addSectionToHospital(@PathVariable("id")UUID hospitalId,@PathVariable("sectionId")UUID sectionId) throws Exception {
+
+        this.hospitalService.addSectionToHospital(hospitalId,sectionId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @GetMapping("/hospitals/{id}/doctors")
     public ResponseEntity findAllHospitalDoctors(@PathVariable("id") UUID hospitalId) throws Exception {
         Hospital hospital = this.hospitalService.findOneById(hospitalId);

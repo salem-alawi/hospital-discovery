@@ -6,6 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,5 +16,8 @@ public interface SectionRepository extends PagingAndSortingRepository<Section, U
 
     @Query(value = "select * from sections where section_id=:sectionId ",nativeQuery = true)
     Optional<Section> findById(@Param("sectionId") String sectionId);
+
+    @Query(value = "select * from sections where section_id  not in :sectionId",nativeQuery = true)
+    List<Section> findAllExceptionListOfId(@Param("sectionId") List<String> sectionId);
 
 }

@@ -11,11 +11,23 @@ class SectionService {
     }
 
     findAllSectionByHospitalId(id){
-
     return http.get('admin/hospitals/'+id+'/sections');
 
     }
 
+    findAllRemainingSectionByHospitalId(id){
+
+return http.get('admin/sections-except/'+id)
+
+    }
+
+
+    addSectionToHospital(hospitalId,sectionId){
+
+
+return http.post('admin/hospitals/'+hospitalId+'/sections/'+sectionId);
+
+    }
 }
 
 export default new SectionService();

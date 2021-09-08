@@ -5,8 +5,8 @@
 
 
       <v-expansion-panels
-          v-model="panel"
-          multiple
+       inset
+       focusable
           v-if="loaded"
       >
         <v-expansion-panel>
@@ -146,10 +146,10 @@
           <v-expansion-panel-header>الاقسام</v-expansion-panel-header>
           <v-expansion-panel-content>
 
-            <div class="d-flex justify-end">
+            <div class="d-flex justify-end" >
               <v-btn
-
-                  @click="showEditHospitalPage()"
+                  style="margin-top: 20px"
+                  @click="addSectionDialog=true"
                   x-small
                   color="primary"
                   dark
@@ -177,16 +177,13 @@
                 اضافة طبيب
               </v-btn>
             </div>
-
-            <div v-for="doctor in doctors" :key="doctor.id">
-              <!--              <ul>-->
-              <!--                <li >{{ doctor.name }}</li>-->
-              <!--              </ul>-->
-
+          <div class="d-flex flex-wrap justify-center">
+            <div style="width: 300px;" v-for="doctor in doctors" :key="doctor.id">
+            
               <DoctorCardAdmin :doctor="doctor"/>
 
             </div>
-
+    </div>
 
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -277,7 +274,13 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+    
+    
+ 
+ 
+ 
       </v-row>
+
 
 
       <v-row justify="center">
@@ -287,7 +290,7 @@
         >
           <v-card>
             <v-card-title class="text-h5">
-              <div style="margin: auto">تعديل طبيب</div>
+              <div style="margin: auto">اضافة طبيب</div>
             </v-card-title>
             <v-card-text>
 
@@ -347,7 +350,46 @@
               <v-btn
                   color="green darken-1"
                   text
-                  @click="updateDoctor()"
+                  @click="createNewDoctor()"
+
+              >
+                حفظ
+              </v-btn>
+
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+    
+    
+ 
+ 
+ 
+      </v-row>
+
+      <v-row justify="center">
+        <v-dialog
+            v-model="addSectionDialog"
+            max-width="290"
+        >
+          <v-card>
+            <v-card-title class="text-h5">
+              <div style="margin: auto">اضافه قسم جديد</div>
+            </v-card-title>
+            <v-card-text>
+              <v-select
+                  item-value="id"
+                  item-text="name"
+                  v-model="selectRemaindSectionId"
+                  :items="allSectionReminds"
+                  label="القسم"
+              ></v-select>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="green darken-1"
+                  text
+                  @click="addSectionToHospital()"
 
               >
                 حفظ
@@ -397,6 +439,10 @@ export default {
   data: () => {
 
     return {
+      selectRemaindSectionId: 0,
+      allSectionReminds: [],
+      addSectionDialog: false,
+      updateDoctorDialog: false,
       selectHosptialSectionId: 0,
       allHospitalSection: [],
       createDoctorName: '',
@@ -502,6 +548,16 @@ export default {
 
       });
 
+
+      SectionService.findAllRemainingSectionByHospitalId(this.id).then(resp=>{
+
+        if(resp.status===200)
+        this.allSectionReminds=resp.data;
+
+        console.log(JSON.stringify(this.allSectionReminds,null,2))
+
+      })
+
       SectionService.findAllSectionByHospitalId(this.id).then(resp => {
         if (resp.status == 200)
           this.sections = resp.data;
@@ -524,6 +580,18 @@ export default {
           alert('error remove');
       })
 
+    },
+
+
+    addSectionToHospital(){
+
+        SectionService.addSectionToHospital(this.id,this.selectRemaindSectionId).then(resp=>{
+
+          if(resp.status===200)
+          location.reload();
+
+        })
+
     }
 
 
@@ -534,9 +602,6 @@ export default {
 
       if (resp.status == 200)
         this.allHospitalSection = resp.data;
-
-
-      console.log(JSON.stringify(resp.data,null,2));
     });
   }
 };

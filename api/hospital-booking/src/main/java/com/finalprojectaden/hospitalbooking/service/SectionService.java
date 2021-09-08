@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -38,5 +39,11 @@ public class SectionService {
         Section section=new Section(createNewSection);
 
         return this.sectionRepository.save(section);
+    }
+
+    public List<Section> findAllExceptListOfId(List<String> hospitalSectionList) {
+
+        return this.sectionRepository.findAllExceptionListOfId(hospitalSectionList);
+
     }
 }

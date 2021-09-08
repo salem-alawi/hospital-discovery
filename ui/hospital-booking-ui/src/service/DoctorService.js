@@ -19,6 +19,14 @@ class  DoctorService {
 
     }
 
+    removeDoctors(id){
+      return http.delete('/admin/doctors/'+id);
+    }
+
+    updateDoctor(doctor){
+      return http.put('/admin/doctors/',doctor);
+    }
+
 }
 
 export default new DoctorService();

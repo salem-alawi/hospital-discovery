@@ -34,6 +34,13 @@ public class DoctorControllerAdmin extends AdminBaseController {
         return new ResponseEntity(doctor, HttpStatus.OK);
     }
 
+    @PutMapping("/doctors")
+    public ResponseEntity updateDoctor(@RequestBody Doctor doctor) throws Exception {
+
+        return new ResponseEntity(this.doctorService.updateOneById(doctor),HttpStatus.OK);
+
+    }
+
     @DeleteMapping("/doctors/{id}")
     public ResponseEntity deleteOneDoctor(@PathVariable("id")UUID doctorId) throws Exception {
 

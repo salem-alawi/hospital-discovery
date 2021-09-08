@@ -4,7 +4,10 @@ import com.finalprojectaden.hospitalbooking.dto.admin.hospital.CreateAndUpdateHo
 import com.finalprojectaden.hospitalbooking.event.EventAction;
 import com.finalprojectaden.hospitalbooking.event.EventDto;
 import com.finalprojectaden.hospitalbooking.event.payloads.HOSPITAL_CREATE_PAYLOAD;
+import com.finalprojectaden.hospitalbooking.exception.ItemNotFoundException;
 import com.finalprojectaden.hospitalbooking.model.Hospital;
+import com.finalprojectaden.hospitalbooking.model.HospitalSection;
+import com.finalprojectaden.hospitalbooking.model.Section;
 import com.finalprojectaden.hospitalbooking.repository.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,12 @@ public class HospitalService {
 
     @Autowired
     private HospitalRepository hospitalRepository;
+
+    @Autowired
+    private SectionService sectionService;
+
+    @Autowired
+    private HospitalSectionService hospitalSectionService;
 
     @Autowired
     private StreamBridge streamBridge;
@@ -67,4 +76,16 @@ public class HospitalService {
 
     }
 
+    public void addSectionToHospital(UUID hospitalId, UUID sectiondId) throws Exception {
+
+        Section section=this.sectionService.findOneById(sectiondId);
+        Hospital hospital=this.findOneById(hospitalId);
+        HospitalSection hospitalSection=new HospitalSection();
+        hospitalSection.setHospital(hospital);
+        hospitalSection.setSection(section);
+
+
+        this.hospitalSectionService.save(hospitalSection);
+
+    }
 }

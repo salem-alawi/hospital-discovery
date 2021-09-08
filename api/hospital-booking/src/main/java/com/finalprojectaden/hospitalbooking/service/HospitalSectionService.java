@@ -43,4 +43,9 @@ public class HospitalSectionService {
         this.hospitalSectionRepository.deleteById(hospitalSectionId);
 
     }
+
+    public void save(HospitalSection hospitalSection) {
+
+        this.hospitalSectionRepository.save(hospitalSection);
+    }
 }

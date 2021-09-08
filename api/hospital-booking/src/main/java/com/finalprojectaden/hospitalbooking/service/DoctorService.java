@@ -30,11 +30,11 @@ public class DoctorService {
         return this.doctorRepository.findAll(pageable);
     }
 
-    public Doctor updateOneById(UUID doctorId, UpdateDoctor updateDoctor) throws Exception {
+    public Doctor updateOneById(Doctor doctor) throws Exception {
 
-        Doctor doctor = this.doctorRepository.findById(doctorId).orElseThrow(() -> new Exception("can't find doctor"));
-        HospitalSection hospitalSection = this.hospitalSectionService.findOneById(updateDoctor.getSectionId());
-        doctor.update(updateDoctor, hospitalSection);
+//        Doctor doctor = this.doctorRepository.findById(doctorId).orElseThrow(() -> new Exception("can't find doctor"));
+//        HospitalSection hospitalSection = this.hospitalSectionService.findOneById(updateDoctor.getSectionId());
+//        doctor.update(updateDoctor, hospitalSection);
         return this.doctorRepository.save(doctor);
     }
 
@@ -46,10 +46,10 @@ public class DoctorService {
 
     public Doctor createNewDoctor(CreateNewDoctor createNewDoctor) throws Exception {
 
-        Hospital hospital = this.hospitalService.findOneById(createNewDoctor.getHospitalId());
+//        Hospital hospital = this.hospitalService.findOneById(createNewDoctor.getHospitalId());
         HospitalSection hospitalSection = this.hospitalSectionService.findOneById(createNewDoctor.getHospitalSectionId());
 
-        Doctor doctor = new Doctor(createNewDoctor, hospital, hospitalSection);
+        Doctor doctor = new Doctor(createNewDoctor, hospitalSection.getHospital(), hospitalSection);
         return this.doctorRepository.save(doctor);
 
     }
