@@ -70,4 +70,10 @@ public class DoctorService {
         doctorRepository.saveAll(doctorList);
 
     }
+
+    public void deleteOneDoctorById(UUID doctorId) throws Exception {
+
+        Doctor doctor= this.doctorRepository.findById(doctorId).orElseThrow(()-> new Exception("can't find doctor"));
+        this.doctorRepository.delete(doctor);
+    }
 }

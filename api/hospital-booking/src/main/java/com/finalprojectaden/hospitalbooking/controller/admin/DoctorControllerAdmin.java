@@ -34,6 +34,14 @@ public class DoctorControllerAdmin extends AdminBaseController {
         return new ResponseEntity(doctor, HttpStatus.OK);
     }
 
+    @DeleteMapping("/doctors/{id}")
+    public ResponseEntity deleteOneDoctor(@PathVariable("id")UUID doctorId) throws Exception {
+
+        this.doctorService.deleteOneDoctorById(doctorId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 
 
