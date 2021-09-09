@@ -7,8 +7,10 @@ import HospitalListScreenAdmin from "../screen/AdminHome/HospitalListScreenAdmin
 import SectionListScreenAdmin from "../screen/AdminHome/SectionListScreenAdmin/SectionListScreenAdmin";
 import EditHospitalScreen
     from "@/screen/AdminHome/HospitalListScreenAdmin/HospitalDetailScreenAdmin/EditHospitalScreen/EditHospitalScreen";
-import MainHome from "../screen/main/MainHome";
+// import MainHome from "../screen/main/MainHome";
 import AdminLogin from "../screen/AdminLogin";
+import AllPublicHospital from "../screen/main/AllPublicHospital";
+import MainHome from "../screen/main/MainHome";
 
 Vue.use(VueRouter);
 
@@ -16,7 +18,15 @@ const routes = [
     {
         path: "/",
         name: "main",
-        component: MainHome
+        component: MainHome,
+        redirect: '/hospitals',
+        children: [
+            {
+                path: "hospitals",
+                name: "publicHospitalPage",
+                component: AllPublicHospital
+            }
+        ]
 
     },
     {

@@ -11,12 +11,9 @@
       </v-app-bar>
       <v-content>
 
-        <a href="/admin-login">تسجيل دخول الاداره</a>
 
 
-        <h1>النطام العام</h1>
-
-
+<router-view></router-view>
 
       </v-content>
     </v-app>

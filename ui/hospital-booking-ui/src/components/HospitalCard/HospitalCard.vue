@@ -44,7 +44,7 @@
         props: ['hospital'],
         data: () => ({}),
         computed: {
-            // ...mapGetters(['allHospitals'])
+
         },
         methods: {
             openOneHospital(oneHospital) {

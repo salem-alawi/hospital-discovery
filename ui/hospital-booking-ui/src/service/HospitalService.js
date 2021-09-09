@@ -18,6 +18,10 @@ class HospitalService {
         return http.put('admin/hospitals/' + id, updateHospitalDto);
     }
 
+    findAllPublicHospital(){
+
+        return http.get('public/hospitals');
+    }
 
 
 }
