@@ -2,25 +2,21 @@
   <div class="HospitalDetailScreenAdmin">
 
     <v-container>
-
-
       <v-expansion-panels
-       inset
-       focusable
+          inset
+          focusable
           v-if="loaded"
       >
         <v-expansion-panel>
           <v-expansion-panel-header>معلومات المشتفى</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-card>
-
+            <v-card v-if="hospital">
               <v-card-text>
-
                 <div class="d-flex justify-end">
                   <v-btn
 
                       @click="showEditHospitalPage()"
-                      x-small
+                      small
                       color="secondary"
                       dark
                   >
@@ -146,11 +142,11 @@
           <v-expansion-panel-header>الاقسام</v-expansion-panel-header>
           <v-expansion-panel-content>
 
-            <div class="d-flex justify-end" >
+            <div class="d-flex justify-end">
               <v-btn
                   style="margin-top: 20px"
                   @click="addSectionDialog=true"
-                  x-small
+                  small
                   color="primary"
                   dark
               >
@@ -158,32 +154,34 @@
               </v-btn>
             </div>
 
-            <SectionCard v-for="section in sections" :key="section.id"
-                         :section="section.section" :hospital-section-id="section.id"></SectionCard>
+            <div class="d-flex justify-center" v-if="sections">
+              <SectionCard style="width: 300px" v-for="section in sections" :key="section.id"
+                           :section="section.section" :hospital-section-id="section.id"/>
+
+            </div>
           </v-expansion-panel-content>
         </v-expansion-panel>
-
         <v-expansion-panel>
           <v-expansion-panel-header>الاطباء</v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="d-flex justify-end">
               <v-btn
-
+                  style="margin-top:20px"
                   @click="showCreateNewDoctor()"
-                  x-small
+                  small
                   color="primary"
                   dark
               >
                 اضافة طبيب
               </v-btn>
             </div>
-          <div class="d-flex flex-wrap justify-center">
-            <div style="width: 300px;" v-for="doctor in doctors" :key="doctor.id">
-            
-              <DoctorCardAdmin :doctor="doctor"/>
+            <div class="d-flex flex-wrap justify-center">
+              <div style="width: 300px;" v-for="doctor in doctors" :key="doctor.id">
 
+                <DoctorCardAdmin :doctor="doctor"/>
+
+              </div>
             </div>
-    </div>
 
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -208,7 +206,6 @@
               <div style="margin: auto">اضافة طبيب</div>
             </v-card-title>
             <v-card-text>
-
               <v-row no-gutters justify="center" align="center">
                 <v-col>
                   <v-file-input
@@ -274,19 +271,13 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-    
-    
- 
- 
- 
       </v-row>
-
 
 
       <v-row justify="center">
         <v-dialog
             v-model="createNewDoctorDialog"
-            max-width="290"
+            max-width="390"
         >
           <v-card>
             <v-card-title class="text-h5">
@@ -300,6 +291,7 @@
                       v-model="file"
                       style="width: 300px"
                       show-size
+
                       label="اختار الصور"
                       accept="image/*"
                       @change="selectImage"
@@ -325,7 +317,7 @@
               <v-text-field
                   style="margin-top: 20px"
                   label="اسم الطبيب"
-                  required
+
                   v-model="createDoctorName"
                   hide-details="auto"
               ></v-text-field>
@@ -335,11 +327,12 @@
                   outlined
                   v-model="createDoctorAbout"
                   label="معلومات عن الطبيب"
-                  required
+
               ></v-textarea>
               <v-select
                   item-value="id"
                   item-text="section.name"
+
                   v-model="selectHosptialSectionId"
                   :items="allHospitalSection"
                   label="القسم"
@@ -351,7 +344,6 @@
                   color="green darken-1"
                   text
                   @click="createNewDoctor()"
-
               >
                 حفظ
               </v-btn>
@@ -359,17 +351,14 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-    
-    
- 
- 
- 
+
+
       </v-row>
 
       <v-row justify="center">
         <v-dialog
             v-model="addSectionDialog"
-            max-width="290"
+            max-width="390"
         >
           <v-card>
             <v-card-title class="text-h5">
@@ -390,7 +379,6 @@
                   color="green darken-1"
                   text
                   @click="addSectionToHospital()"
-
               >
                 حفظ
               </v-btn>
@@ -403,25 +391,11 @@
 
     </v-container>
 
-    <!--    <v-btn @click="removeThisHospital">-->
-
-    <!--      remove this hospital-->
-
-    <!--    </v-btn>-->
-
-    <!--    {{ id }}-->
-
 
   </div>
 
 
 </template>
-<style>
-#map {
-  width: 100%;
-  height: 480px;
-}
-</style>
 <script>
 
 import HospitalService from "../../../../service/HospitalService";
@@ -476,20 +450,11 @@ export default {
     }
   },
   methods: {
-    updateDoctor(){
-
-      // DoctorService.updateDoctor({}).then((resp)=>{
-      //
-      // });
-
-    },
     showCreateNewDoctor() {
       this.createNewDoctorDialog = true;
     },
     showEditHospitalPage() {
-
       this.$router.push('/admin/hospitals/' + this.hospital.id + '/edit');
-
     },
     createNewDoctor() {
       DoctorService.createNewDoctor({
@@ -499,11 +464,14 @@ export default {
         hospitalSectionId: this.selectHosptialSectionId
       }).then((resp) => {
 
-        if(resp.status===200){
-          this.createNewDoctorDialog=false;
+        if (resp.status === 200) {
+          this.createNewDoctorDialog = false;
+          this.createDoctorName = '';
+          this.createDoctorAbout = '';
+          this.coverImage = '';
+          this.selectHosptialSectionId = 0;
           this.initialize()
         }
-
       });
 
     },
@@ -528,34 +496,25 @@ export default {
       this.message = "";
       this.upload();
     },
-    resetData() {
-      this.currentImage = undefined;
-      this.previewImage = undefined;
-      this.progress = 0;
-      this.name = '';
-      this.description = '';
-      this.longitude = '';
-      this.latitude = '';
-      this.file = null;
-    },
     initialize() {
+
+      HospitalSectionService.findAllByHospitalId(this.id).then(resp => {
+
+        if (resp.status == 200)
+          this.allHospitalSection = resp.data;
+      });
+
       HospitalService.findOneHospital(this.id).then(resp => {
 
         if (resp.status == 200) {
           this.hospital = resp.data;
           this.loaded = true;
         }
-
       });
+      SectionService.findAllRemainingSectionByHospitalId(this.id).then(resp => {
 
-
-      SectionService.findAllRemainingSectionByHospitalId(this.id).then(resp=>{
-
-        if(resp.status===200)
-        this.allSectionReminds=resp.data;
-
-        console.log(JSON.stringify(this.allSectionReminds,null,2))
-
+        if (resp.status === 200)
+          this.allSectionReminds = resp.data;
       })
 
       SectionService.findAllSectionByHospitalId(this.id).then(resp => {
@@ -572,37 +531,19 @@ export default {
       });
 
     },
-    removeThisHospital() {
-      HospitalService.removeHospital(this.id).then((resp) => {
-        if (resp.status == 200)
-          alert('remove success')
-        else
-          alert('error remove');
-      })
+    addSectionToHospital() {
 
-    },
+      SectionService.addSectionToHospital(this.id, this.selectRemaindSectionId).then(resp => {
 
-
-    addSectionToHospital(){
-
-        SectionService.addSectionToHospital(this.id,this.selectRemaindSectionId).then(resp=>{
-
-          if(resp.status===200)
+        if (resp.status === 200) {
           location.reload();
-
-        })
-
+        }
+      });
     }
-
-
   },
   mounted() {
     this.initialize();
-    HospitalSectionService.findAllByHospitalId(this.id).then(resp => {
 
-      if (resp.status == 200)
-        this.allHospitalSection = resp.data;
-    });
   }
 };
 </script>

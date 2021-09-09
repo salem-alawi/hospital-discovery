@@ -18,6 +18,8 @@ class HospitalService {
         return http.put('admin/hospitals/' + id, updateHospitalDto);
     }
 
+
+
 }
 
 export default new HospitalService();
