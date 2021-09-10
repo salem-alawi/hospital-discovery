@@ -14,11 +14,36 @@
       </slide>
     </carousel-3d>
 
+    <br />
+    <v-divider />
+    <br />
+    <v-row v-if="hospital">
+      <v-col style="background-color: rgba(211,211,211,0.27);border-radius:18px;margin: 20px;height: 400px">
+        <div  class="container">
+        <h3 >نبده عن المشفى</h3>
+        <h4 >{{hospital.description}}</h4>
+        </div>
+      </v-col >
+      <v-col style="height: 400px">
+        <div  class="container">
+        <iframe
+            :src="'https://maps.google.com/maps?q=' + hospital.latitude + ', ' + hospital.longitude + '&z=15&output=embed'"
+            width="100%" height="400"  frameborder="0"
+            style="border: 0;border-radius: 18px"
+            class="grey lighten-2">
+        </iframe>
+        </div>
+      </v-col>
+
+    </v-row>
+<br />
+    <v-divider />
+    <br />
 <div class="d-flex justify-center">
   <h3>الاقسام</h3>
 </div>
 
-    <div class="d-flex justify-center">
+    <div class="d-flex flex-wrap justify-center" style="background-color: rgba(211,211,211,0.27);border-radius:18px;margin: 20px;">
       <HospitalSectionPublic style="width: 300px" v-for="section in sections" :key="section.id" :hospital-section="section" />
     </div>
 
