@@ -97,4 +97,17 @@ public class HospitalControllerAdmin extends AdminBaseController {
         return new ResponseEntity(doctorList, HttpStatus.OK);
     }
 
+    @PostMapping("/hospitals/{id}/images")
+    public ResponseEntity updateHospitalsImage(@PathVariable("id")UUID hospitalId,@RequestBody List<String> images) throws Exception {
+
+        Hospital hospital= this.hospitalService.findOneById(hospitalId);
+
+        hospital.getHospitalStaticConfig().setImages(images);
+        this.hospitalService.save(hospital);
+        return new ResponseEntity(HttpStatus.OK);
+
+
+
+    }
+
 }

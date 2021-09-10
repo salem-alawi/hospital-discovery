@@ -154,7 +154,7 @@
               </v-btn>
             </div>
 
-            <div class="d-flex justify-center" v-if="sections">
+            <div class="d-flex flex-wrap  justify-center" v-if="sections">
               <SectionCard style="width: 300px" v-for="section in sections" :key="section.id"
                            :section="section.section" :hospital-section-id="section.id"/>
 
@@ -200,12 +200,13 @@
                 اضافه صوره
               </v-btn>
             </div>
-            <div class="d-flex justify-center" v-if="currentHospital">
+            <div class="d-flex flex-wrap justify-center" v-if="currentHospital">
 
               <v-img
+                  style="margin: 20px"
                   v-for="image in currentHospital.hospitalStaticConfig.images" :key="image"
-                  :lazy-src="image"
-                  max-height="150"
+                  :src="image"
+                  max-height="250"
                   max-width="250"
               ></v-img>
 
@@ -302,7 +303,7 @@
         >
           <v-card>
             <v-card-title class="text-h5">
-              <div style="margin: auto">اضافة طبيب</div>
+              <div style="margin: auto"> اضافه صوره</div>
             </v-card-title>
             <v-card-text>
 
@@ -334,37 +335,13 @@
 
                 </v-col>
               </v-row>
-
-              <v-text-field
-                  style="margin-top: 20px"
-                  label="اسم الطبيب"
-
-                  v-model="createDoctorName"
-                  hide-details="auto"
-              ></v-text-field>
-
-              <v-textarea
-                  style="margin-top: 20px"
-                  outlined
-                  v-model="createDoctorAbout"
-                  label="معلومات عن الطبيب"
-
-              ></v-textarea>
-              <v-select
-                  item-value="id"
-                  item-text="section.name"
-
-                  v-model="selectHosptialSectionId"
-                  :items="allHospitalSection"
-                  label="القسم"
-              ></v-select>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
                   color="green darken-1"
                   text
-                  @click="createNewDoctor()"
+                  @click="addNewImage()"
               >
                 حفظ
               </v-btn>
@@ -555,6 +532,21 @@ export default {
     }
   },
   methods: {
+    addNewImage(){
+
+
+      const newImages= this.hospital.hospitalStaticConfig.images.slice();
+      newImages.push(this.coverImage);
+      HospitalService.addNewImage(this.hospital.id,newImages).then(resp=>{
+
+        if(resp.status ===200){
+          location.reload();
+
+        }
+
+      })
+
+    },
     showCreateNewDoctor() {
       this.createNewDoctorDialog = true;
     },

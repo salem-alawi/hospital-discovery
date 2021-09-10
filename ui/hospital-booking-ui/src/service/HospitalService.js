@@ -23,7 +23,13 @@ class HospitalService {
         return http.get('public/hospitals');
     }
 
+    addNewImage(hospitalId,listOfImages){
+        return http.post('admin/hospitals/'+hospitalId+'/images',listOfImages);
+    }
 
+    findOneHospitalPublic(id){
+        return http.get('/public/hospitals/'+id)
+    }
 }
 
 export default new HospitalService();

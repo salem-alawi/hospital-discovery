@@ -237,7 +237,7 @@ export default {
 
       this.currentImage = image;
       this.previewImage = URL.createObjectURL(this.currentImage);
-      this.hospital.hospitalStaticConfig.coverImage = this.previewImage;
+      this.hospital.hospitalStaticConfig.coverImage = this.coverImage;
       this.progress = 0;
       this.message = "";
       this.upload();

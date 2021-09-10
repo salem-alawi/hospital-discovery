@@ -55,4 +55,11 @@ public class HospitalPublicController extends PublicBaseApiController{
         return new ResponseEntity(count, HttpStatus.OK);
     }
 
+    @GetMapping("/hospitals/{id}")
+    public ResponseEntity findOneHospitalPublic(@PathVariable("id")UUID hospitalId) throws Exception {
+
+        Hospital hospital= this.hospitalService.findOneById(hospitalId);
+        return new ResponseEntity(hospital,HttpStatus.OK);
+    }
+
 }
