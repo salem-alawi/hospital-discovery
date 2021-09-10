@@ -11,6 +11,7 @@ import EditHospitalScreen
 import AdminLogin from "../screen/AdminLogin";
 import AllPublicHospital from "../screen/main/AllPublicHospital";
 import MainHome from "../screen/main/MainHome";
+import HospitalDetailPublic from "../screen/main/HospitalDetailPublic";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,13 @@ const routes = [
         component: MainHome,
         redirect: '/hospitals',
         children: [
+
+            {
+                path: "hospitals/:id",
+                name: "hospitalsDetailPublic",
+                component: HospitalDetailPublic,
+                props: true
+            },
             {
                 path: "hospitals",
                 name: "publicHospitalPage",

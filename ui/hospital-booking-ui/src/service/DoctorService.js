@@ -27,6 +27,12 @@ class  DoctorService {
       return http.put('/admin/doctors/',doctor);
     }
 
+    findDoctorCountBySectionIdPublic(hospitalSectionId){
+
+        return http.get('/public/hospitals/'+hospitalSectionId+'/sections/'+hospitalSectionId+'/doctor-count');
+
+    }
+
 }
 
 export default new DoctorService();

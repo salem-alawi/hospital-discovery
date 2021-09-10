@@ -189,7 +189,28 @@
         <v-expansion-panel>
           <v-expansion-panel-header>معرض الصور</v-expansion-panel-header>
           <v-expansion-panel-content>
-            Some content
+            <div class="d-flex justify-end">
+              <v-btn
+                  style="margin-top: 20px"
+                  @click="addّImageDialog=true"
+                  small
+                  color="primary"
+                  dark
+              >
+                اضافه صوره
+              </v-btn>
+            </div>
+            <div class="d-flex justify-center" v-if="currentHospital">
+
+              <v-img
+                  v-for="image in currentHospital.hospitalStaticConfig.images" :key="image"
+                  :lazy-src="image"
+                  max-height="150"
+                  max-width="250"
+              ></v-img>
+
+            </div>
+
           </v-expansion-panel-content>
         </v-expansion-panel>
 
@@ -271,6 +292,88 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+      </v-row>
+
+
+      <v-row justify="center">
+        <v-dialog
+            v-model="addّImageDialog"
+            max-width="390"
+        >
+          <v-card>
+            <v-card-title class="text-h5">
+              <div style="margin: auto">اضافة طبيب</div>
+            </v-card-title>
+            <v-card-text>
+
+              <v-row no-gutters justify="center" align="center">
+                <v-col>
+                  <v-file-input
+                      v-model="file"
+                      style="width: 300px"
+                      show-size
+
+                      label="اختار الصور"
+                      accept="image/*"
+                      @change="selectImage"
+                  ></v-file-input>
+                </v-col>
+                <v-col cols="4" class="pl-2">
+                  <div v-if="progress">
+                    <div>
+                      <v-progress-linear
+                          v-model="progress"
+                          color="light-blue"
+                          height="25"
+                          reactive
+                      >
+                        <strong>{{ progress }} %</strong>
+                      </v-progress-linear>
+                    </div>
+                  </div>
+
+                </v-col>
+              </v-row>
+
+              <v-text-field
+                  style="margin-top: 20px"
+                  label="اسم الطبيب"
+
+                  v-model="createDoctorName"
+                  hide-details="auto"
+              ></v-text-field>
+
+              <v-textarea
+                  style="margin-top: 20px"
+                  outlined
+                  v-model="createDoctorAbout"
+                  label="معلومات عن الطبيب"
+
+              ></v-textarea>
+              <v-select
+                  item-value="id"
+                  item-text="section.name"
+
+                  v-model="selectHosptialSectionId"
+                  :items="allHospitalSection"
+                  label="القسم"
+              ></v-select>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                  color="green darken-1"
+                  text
+                  @click="createNewDoctor()"
+              >
+                حفظ
+              </v-btn>
+
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+
       </v-row>
 
 
@@ -446,7 +549,9 @@ export default {
       hospital: null,
       sections: [],
       doctors: [],
-      currentUpdateDoctorId: undefined
+      currentUpdateDoctorId: undefined,
+      currentHospital: undefined,
+      addّImageDialog: false
     }
   },
   methods: {
@@ -497,6 +602,18 @@ export default {
       this.upload();
     },
     initialize() {
+
+      HospitalService.findOneHospital(this.id).then(resp => {
+
+        console.log('00000')
+        console.log(resp.data)
+        if (resp.status === 200)
+          this.currentHospital = resp.data
+
+
+
+
+      })
 
       HospitalSectionService.findAllByHospitalId(this.id).then(resp => {
 

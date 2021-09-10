@@ -6,17 +6,12 @@
 
             <div class="d-flex flex-wrap justify-center">
                 <div   style="margin: 10px"  v-for="hos in allHospitals" :key="hos.id" >
-
                     <HospitalCard :hospital=hos @openMap="(item)=> openLocation(item)"/>
-
                 </div>
-
             </div>
 
         </div>
         <CreateNewHospital @closeDia="createClose" :show="createHospitalDialog"/>
-
-
         <v-dialog v-model="locationDialog" max-width="1100">
             <v-card>
                 <v-card-text>

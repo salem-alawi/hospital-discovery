@@ -10,23 +10,28 @@ class SectionService {
         });
     }
 
-    findAllSectionByHospitalId(id){
-    return http.get('admin/hospitals/'+id+'/sections');
+    findAllSectionByHospitalId(id) {
+        return http.get('admin/hospitals/' + id + '/sections');
 
     }
 
-    findAllRemainingSectionByHospitalId(id){
+    findAllRemainingSectionByHospitalId(id) {
 
-return http.get('admin/sections-except/'+id)
+        return http.get('admin/sections-except/' + id)
 
     }
 
 
-    addSectionToHospital(hospitalId,sectionId){
+    addSectionToHospital(hospitalId, sectionId) {
 
 
-return http.post('admin/hospitals/'+hospitalId+'/sections/'+sectionId);
+        return http.post('admin/hospitals/' + hospitalId + '/sections/' + sectionId);
 
+    }
+
+    findAllByHospitalPublic(hospitalId) {
+
+        return http.get('public/hospitals/'+hospitalId+'/sections');
     }
 }
 

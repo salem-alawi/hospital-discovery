@@ -3,7 +3,7 @@
   <div>
 
     <v-app>
-      <v-app-bar style="background-color: red" app>
+      <v-app-bar style="background-color: #EE534F" app>
         <!-- -->
         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
@@ -12,8 +12,7 @@
       <v-content>
 
 
-
-<router-view></router-view>
+        <router-view></router-view>
 
       </v-content>
     </v-app>
@@ -29,9 +28,9 @@
 
 export default {
 
-  props:[],
-  data: ()=>{
-    return{
+  props: [],
+  data: () => {
+    return {
       drawer: false
     }
   },

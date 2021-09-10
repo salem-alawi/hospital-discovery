@@ -4,7 +4,7 @@
 
 
       <v-app>
-        <v-app-bar style="background-color: #1936ee" app>
+        <v-app-bar style="background-color: #EE534F" app>
           <!-- -->
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
