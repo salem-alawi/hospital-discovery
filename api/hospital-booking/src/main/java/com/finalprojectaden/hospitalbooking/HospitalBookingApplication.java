@@ -68,7 +68,7 @@ public class HospitalBookingApplication {
                 hospitalContactInfos.add(hospitalContactInfo);
 
                 hospitalStaticConfig.setHospitalContactInfos(hospitalContactInfos);
-                hospitalStaticConfig.setCoverImage("https://e7.pngegg.com/pngimages/573/405/png-clipart-architecture-drawing-building-building-hospital.png");
+                hospitalStaticConfig.setCoverImage("https://hunaaden.com/user_images/news/1399373203.jpeg");
                 hospital.setHospitalStaticConfig(hospitalStaticConfig);
                 hospital = hospitalRepository.save(hospital);
 

@@ -39,30 +39,30 @@ class HospitalControllerAdminTest {
     @MockBean
     private HospitalRepository hospitalRepository;
 
-
-    @BeforeEach
-    public void setupMock() throws Exception {
-        MockitoAnnotations.openMocks(this);
-    }
-
-
-    @Test
-    void findAllHospitalAdmin() throws Exception {
-
-        doReturn(HospitalDataTest.hospitalPage()).when(hospitalRepository).findAllPage(Pageable.ofSize(1));
-        String url = "/admin/hospitals";
-        MockHttpServletRequestBuilder requestBuilder = get(url);
-        this.mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1))).andDo(print());
-        verify(hospitalRepository, times(1)).findAllPage(any());
-    }
-
-    @Test
-    void createNewHospitalAdmin() throws Exception {
+//
+//    @BeforeEach
+//    public void setupMock() throws Exception {
+//        MockitoAnnotations.openMocks(this);
+//    }
 
 
+//    @Test
+//    void findAllHospitalAdmin() throws Exception {
+//
+//        doReturn(HospitalDataTest.hospitalPage()).when(hospitalRepository).findAllPage(Pageable.ofSize(1));
+//        String url = "/admin/hospitals";
+//        MockHttpServletRequestBuilder requestBuilder = get(url);
+//        this.mockMvc.perform(requestBuilder).andExpect(status().isOk())
+//                .andExpect(jsonPath("$.content", hasSize(1))).andDo(print());
+//        verify(hospitalRepository, times(1)).findAllPage(any());
+//    }
+
+//    @Test
+//    void createNewHospitalAdmin() throws Exception {
 
 
 
-    }
+
+
+//    }
 }
