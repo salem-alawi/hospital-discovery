@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hospitalbookingandroid.dto.Hospital;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -41,6 +42,9 @@ public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardLi
         holder.mItem = messagesList.get(position);
         holder.hospitalName.setText(messagesList.get(position).getName());
 
+
+        Picasso.get().load(holder.mItem.getHospitalStaticConfig().getCoverImage()).into(holder.hospitalImage);
+
         Location hospitalLocation=new Location(LocationManager.GPS_PROVIDER);
         hospitalLocation.setLatitude(Double.valueOf(holder.mItem.getLatitude()));
         hospitalLocation.setLongitude(Double.valueOf(holder.mItem.getLongitude()));
@@ -66,7 +70,7 @@ public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardLi
 
 
         holder.mView.setOnClickListener((view)->{
-            Toast.makeText(context, "hellow="+messagesList.get(position).getId().toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "click hospital id="+messagesList.get(position).getId().toString(),Toast.LENGTH_SHORT).show();
         });
     }
     @Override
