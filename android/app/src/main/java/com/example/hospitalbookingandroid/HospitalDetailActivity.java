@@ -120,7 +120,6 @@ public class HospitalDetailActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        Log.d(TAG, "start compass");
         compass.start();
     }
 
