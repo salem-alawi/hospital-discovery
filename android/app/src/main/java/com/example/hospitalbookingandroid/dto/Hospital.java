@@ -1,8 +1,9 @@
 package com.example.hospitalbookingandroid.dto;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Hospital {
+public class Hospital implements Serializable {
 
     private UUID id;
 

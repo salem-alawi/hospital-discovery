@@ -1,6 +1,7 @@
 package com.example.hospitalbookingandroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hospitalbookingandroid.dto.Hospital;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -20,9 +22,12 @@ import java.util.List;
 
 public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardListAdapter.ViewHolder> {
 
+    public static final String EXTRA_MESSAGE = "HospitalDetail";
     private final List<Hospital> messagesList;
     private final Location location;
     private Context context;
+
+
     //        private MessagesService.MessageInterface messageInterface;
     public HospitalCardListAdapter(List<Hospital> messages, Location currentLocation, Context context) {
         messagesList = messages;
@@ -70,6 +75,13 @@ public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardLi
 
 
         holder.mView.setOnClickListener((view)->{
+            Intent intent = new Intent(context, HospitalDetailActivity.class);
+
+            Gson gson = new Gson();
+            String myJson = gson.toJson(holder.mItem);
+            intent.putExtra(EXTRA_MESSAGE, myJson);
+            context.startActivity(intent);
+
             Toast.makeText(context, "click hospital id="+messagesList.get(position).getId().toString(),Toast.LENGTH_SHORT).show();
         });
     }
