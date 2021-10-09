@@ -22,7 +22,6 @@ const routes = [
         component: MainHome,
         redirect: '/hospitals',
         children: [
-
             {
                 path: "hospitals/:id",
                 name: "hospitalsDetailPublic",

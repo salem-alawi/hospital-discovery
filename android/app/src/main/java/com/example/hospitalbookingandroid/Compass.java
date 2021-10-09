@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 
 public class Compass implements SensorEventListener {
     private static final String TAG = "Compass";
@@ -25,10 +26,17 @@ public class Compass implements SensorEventListener {
     private float[] R = new float[9];
     private float[] I = new float[9];
 
+    Location currentLocation;
+    Location targetLocation;
+
     private float azimuth;
     private float azimuthFix;
 
-    public Compass(Context context) {
+    public Compass(Context context, Location currentLocation,Location targetLocation) {
+        this.currentLocation=currentLocation;
+        this.targetLocation=targetLocation;
+
+
         sensorManager = (SensorManager) context
                 .getSystemService(Context.SENSOR_SERVICE);
         gsensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -90,6 +98,8 @@ public class Compass implements SensorEventListener {
 
             }
 
+            float R[] = new float[9];
+            float I[] = new float[9];
             boolean success = SensorManager.getRotationMatrix(R, I, mGravity,
                     mGeomagnetic);
             if (success) {
@@ -97,28 +107,16 @@ public class Compass implements SensorEventListener {
                 SensorManager.getOrientation(R, orientation);
                 // Log.d(TAG, "azimuth (rad): " + azimuth);
                 azimuth = (float) Math.toDegrees(orientation[0]); // orientation
-//                azimuth = (azimuth + azimuthFix + 360) % 360;
-                azimuth -= bearing(yourlatitude, yourlongitude, latWhereToPoint, lngWhereToPoint);
+                azimuth = (azimuth + 360) % 360;
 
-                // Log.d(TAG, "azimuth (deg): " + azimuth);
-                if (listener != null) {
-                    listener.onNewAzimuth(azimuth);
-                }
+                listener.onNewAzimuth(azimuth);
+         // Log.d(TAG, "azimuth (deg): " + azimuth);
+
             }
         }
     }
 
-    protected double bearing(double startLat, double startLng, double endLat, double endLng){
-        double longitude1 = startLng;
-        double longitude2 = endLng;
-        double latitude1 = Math.toRadians(startLat);
-        double latitude2 = Math.toRadians(endLat);
-        double longDiff= Math.toRadians(longitude2-longitude1);
-        double y= Math.sin(longDiff)*Math.cos(latitude2);
-        double x=Math.cos(latitude1)*Math.sin(latitude2)-Math.sin(latitude1)*Math.cos(latitude2)*Math.cos(longDiff);
 
-        return (Math.toDegrees(Math.atan2(y, x))+360)%360;
-    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hospitalbookingandroid.dto.Hospital;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -26,19 +27,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
 
-    private int start=0;
+    private int start = 0;
     private RecyclerView mRecyclerView;
     private double lat;
     private double lon;
     private static final String TAG = MainActivity.class.getSimpleName();
-    Location location=new Location(LocationManager.FUSED_PROVIDER);
+    Location location = new Location(LocationManager.FUSED_PROVIDER);
 
     public List<Hospital> hospitalList;
     Call<HospitalResponse> responseCall;
     HospitalCardListAdapter adapter;
     HospitalApi service;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
-        mRecyclerView= findViewById(R.id.hospitalRecy);
+        mRecyclerView = findViewById(R.id.hospitalRecy);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
@@ -60,17 +63,18 @@ public class MainActivity extends AppCompatActivity {
 
         Picasso.get().setLoggingEnabled(true);
 
-        service  = retrofit.create(HospitalApi.class);
+        service = retrofit.create(HospitalApi.class);
 
         responseCall = service.findAllHospitals();
         responseCall.enqueue(new Callback<HospitalResponse>() {
             @Override
             public void onResponse(Call<HospitalResponse> call, Response<HospitalResponse> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    hospitalList= response.body().getContent();;
-                     adapter= new HospitalCardListAdapter(hospitalList,location,MainActivity.this);
+                    hospitalList = response.body().getContent();
+                    ;
+                    adapter = new HospitalCardListAdapter(hospitalList, location, MainActivity.this);
                     mRecyclerView.setAdapter(adapter);
                     mRecyclerView.requestLayout();
                 }
@@ -86,31 +90,24 @@ public class MainActivity extends AppCompatActivity {
 
 
         ActivityCompat.requestPermissions(MainActivity.this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION},
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
 
         Wherebouts.instance(MainActivity.this).onChange(new Workable<GPSPoint>() {
             @Override
             public void work(GPSPoint gpsPoint) {
 
-                if(location.getLatitude()!=gpsPoint.getLocation().getLatitude() || location.getLongitude()!=gpsPoint.getLocation().getLongitude()){
+                if (location.getLatitude() != gpsPoint.getLocation().getLatitude() || location.getLongitude() != gpsPoint.getLocation().getLongitude()) {
 
                     location.setLongitude(gpsPoint.getLocation().getLongitude());
                     location.setLatitude(gpsPoint.getLocation().getLatitude());
 
-
-                    adapter.notifyDataSetChanged();
+                    if (adapter != null)
+                        adapter.notifyDataSetChanged();
                 }
-
-
-
-
-
-
             }
         });
     }
-
 
 
     @Override

@@ -8,6 +8,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -27,8 +29,7 @@ public class HospitalDetailActivity extends AppCompatActivity {
     Button callNumber;
     Button messageNumber;
     Hospital hospital;
-
-
+    Location location;
 
 
     private Compass compass;
@@ -38,25 +39,32 @@ public class HospitalDetailActivity extends AppCompatActivity {
     private float currentAzimuth;
     private SOTWFormatter sotwFormatter;
 
-
+    Location targetLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_detail);
 
-        callNumber=findViewById(R.id.call);
-        messageNumber= findViewById(R.id.txt);
-        Gson gson = new Gson();
-        hospital= gson.fromJson(getIntent().getStringExtra(EXTRA_MESSAGE), Hospital.class);
 
+
+
+        callNumber = findViewById(R.id.call);
+        messageNumber = findViewById(R.id.txt);
+        Gson gson = new Gson();
+        hospital = gson.fromJson(getIntent().getStringExtra(EXTRA_MESSAGE), Hospital.class);
+
+
+        targetLocation=new Location(LocationManager.FUSED_PROVIDER);
+        targetLocation.setLongitude(Double.valueOf(hospital.getLongitude()));
+        targetLocation.setLatitude(Double.valueOf(hospital.getLatitude()));
 
         callNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                String phoneNumber=hospital.getHospitalStaticConfig().getHospitalContactInfos().get(0).getPhoneNumber().replace("+","00");
-                callIntent.setData(Uri.parse("tel:"+phoneNumber));//change the number
+                String phoneNumber = hospital.getHospitalStaticConfig().getHospitalContactInfos().get(0).getPhoneNumber().replace("+", "00");
+                callIntent.setData(Uri.parse("tel:" + phoneNumber));//change the number
                 startActivity(callIntent);
 
             }
@@ -77,10 +85,26 @@ public class HospitalDetailActivity extends AppCompatActivity {
 
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPage);
-        ImageAdapter adapterView = new ImageAdapter(this,hospital);
+        ImageAdapter adapterView = new ImageAdapter(this, hospital);
         mViewPager.setAdapter(adapterView);
 
-        sotwLabel= findViewById(R.id.sotw_label);
+         this.location=new Location(LocationManager.FUSED_PROVIDER);
+        Wherebouts.instance(HospitalDetailActivity.this).onChange(new Workable<GPSPoint>() {
+            @Override
+            public void work(GPSPoint gpsPoint) {
+
+                if (location.getLatitude() != gpsPoint.getLocation().getLatitude() || location.getLongitude() != gpsPoint.getLocation().getLongitude()) {
+
+                    location.setLongitude(gpsPoint.getLocation().getLongitude());
+                    location.setLatitude(gpsPoint.getLocation().getLatitude());
+                }
+
+
+            }
+        });
+
+
+        sotwLabel = findViewById(R.id.sotw_label);
 
 
         sotwFormatter = new SOTWFormatter(HospitalDetailActivity.this);
@@ -91,7 +115,6 @@ public class HospitalDetailActivity extends AppCompatActivity {
 
 
     }
-
 
 
     @Override
@@ -120,8 +143,11 @@ public class HospitalDetailActivity extends AppCompatActivity {
         compass.stop();
     }
 
+
     private void setupCompass() {
-        compass = new Compass(this);
+
+
+        compass = new Compass(this,location, targetLocation);
         Compass.CompassListener cl = getCompassListener();
         compass.setListener(cl);
     }
@@ -149,14 +175,18 @@ public class HospitalDetailActivity extends AppCompatActivity {
     private Compass.CompassListener getCompassListener() {
         return new Compass.CompassListener() {
             @Override
-            public void onNewAzimuth(final float azimuth) {
+            public void onNewAzimuth( float azimuth) {
                 // UI updates only in UI thread
                 // https://stackoverflow.com/q/11140285/444966
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        adjustArrow(azimuth);
-                        adjustSotwLabel(azimuth);
+
+                        float result=azimuth;
+                        result -= bearing(location.getLatitude(), location.getLongitude(), targetLocation.getLatitude(), targetLocation.getLongitude());
+
+                        adjustArrow(result);
+                        adjustSotwLabel(result);
                     }
                 });
             }
@@ -164,5 +194,16 @@ public class HospitalDetailActivity extends AppCompatActivity {
     }
 
 
+    protected float bearing(double startLat, double startLng, double endLat, double endLng){
+        double longitude1 = startLng;
+        double longitude2 = endLng;
+        double latitude1 = Math.toRadians(startLat);
+        double latitude2 = Math.toRadians(endLat);
+        double longDiff= Math.toRadians(longitude2-longitude1);
+        double y= Math.sin(longDiff)*Math.cos(latitude2);
+        double x=Math.cos(latitude1)*Math.sin(latitude2)-Math.sin(latitude1)*Math.cos(latitude2)*Math.cos(longDiff);
+
+        return (float) ((Math.toDegrees(Math.atan2(y, x))+360)%360);
+    }
 
 }

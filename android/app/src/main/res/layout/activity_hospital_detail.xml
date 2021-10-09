@@ -62,12 +62,13 @@
         android:layout_width="20dp"
         android:layout_height="240dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="40dp"
         android:contentDescription="@string/compass_hands"
         android:scaleType="fitXY"
         android:src="@drawable/hands"
         app:layout_constraintBottom_toBottomOf="@+id/main_image_dial"
-        tools:layout_editor_absoluteX="197dp" />
+        app:layout_constraintEnd_toEndOf="@+id/main_image_dial"
+        app:layout_constraintStart_toStartOf="@+id/main_image_dial"
+        app:layout_constraintTop_toTopOf="@+id/main_image_dial" />
 
         <TextView
         android:id="@+id/sotw_label"
