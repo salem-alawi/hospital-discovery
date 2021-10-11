@@ -30,25 +30,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int start = 0;
-    private RecyclerView mRecyclerView;
-    private double lat;
-    private double lon;
-    private static final String TAG = MainActivity.class.getSimpleName();
-    Location location = new Location(LocationManager.FUSED_PROVIDER);
 
+    private RecyclerView mRecyclerView;
+    Location currentLocation = new Location(LocationManager.FUSED_PROVIDER);
     public List<Hospital> hospitalList;
-    Call<HospitalResponse> responseCall;
     HospitalCardListAdapter adapter;
     HospitalApi service;
+    Wherebouts wherebouts;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
 
         mRecyclerView = findViewById(R.id.hospitalRecy);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -62,29 +56,21 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         Picasso.get().setLoggingEnabled(true);
-
         service = retrofit.create(HospitalApi.class);
-
-        responseCall = service.findAllHospitals();
+        Call<HospitalResponse> responseCall= service.findAllHospitals();
         responseCall.enqueue(new Callback<HospitalResponse>() {
             @Override
             public void onResponse(Call<HospitalResponse> call, Response<HospitalResponse> response) {
-
                 if (response.isSuccessful()) {
-
                     hospitalList = response.body().getContent();
-                    ;
-                    adapter = new HospitalCardListAdapter(hospitalList, location, MainActivity.this);
+                    adapter = new HospitalCardListAdapter(hospitalList, currentLocation, MainActivity.this);
                     mRecyclerView.setAdapter(adapter);
                     mRecyclerView.requestLayout();
                 }
-
             }
-
             @Override
             public void onFailure(Call<HospitalResponse> call, Throwable t) {
-
-                System.out.printf("not success");
+                Toast.makeText(MainActivity.this,"حدث حخطى انثاء الاتصال بلخادم",Toast.LENGTH_SHORT);
             }
         });
 
@@ -93,14 +79,15 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
 
-        Wherebouts.instance(MainActivity.this).onChange(new Workable<GPSPoint>() {
+        wherebouts= Wherebouts.instance(MainActivity.this);
+        wherebouts.onChange(new Workable<GPSPoint>() {
             @Override
             public void work(GPSPoint gpsPoint) {
 
-                if (location.getLatitude() != gpsPoint.getLocation().getLatitude() || location.getLongitude() != gpsPoint.getLocation().getLongitude()) {
+                if (currentLocation.getLatitude() != gpsPoint.getLocation().getLatitude() || currentLocation.getLongitude() != gpsPoint.getLocation().getLongitude()) {
 
-                    location.setLongitude(gpsPoint.getLocation().getLongitude());
-                    location.setLatitude(gpsPoint.getLocation().getLatitude());
+                    currentLocation.setLongitude(gpsPoint.getLocation().getLongitude());
+                    currentLocation.setLatitude(gpsPoint.getLocation().getLatitude());
 
                     if (adapter != null)
                         adapter.notifyDataSetChanged();
@@ -127,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "لم يتم الحصول على الادن في استخدام بيانات موقع الهاتف الرجاء الموافقه على استخدام التطبيق لصلاحيات الموقع للعمل بصوره طبيعيه", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -137,4 +124,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        wherebouts.stop();
+    }
 }

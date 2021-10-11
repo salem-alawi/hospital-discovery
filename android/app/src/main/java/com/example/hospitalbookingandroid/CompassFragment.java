@@ -1,9 +1,11 @@
 package com.example.hospitalbookingandroid;
 
+import android.app.FragmentTransaction;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -18,27 +20,27 @@ import android.widget.TextView;
 import com.example.hospitalbookingandroid.dto.Hospital;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CompassFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CompassFragment extends Fragment {
+public class CompassFragment extends DialogFragment {
     public static final String EXTRA_MESSAGE = "HospitalDetail";
-
     Hospital hospital;
     Location location;
 
 
     private Compass compass;
     private ImageView arrowView;
-    private TextView sotwLabel;  // SOTW is for "side of the world"
-
+    private TextView textView;
     private float currentAzimuth;
     private SOTWFormatter sotwFormatter;
 
     Location targetLocation;
-
+   View view;
 
     public CompassFragment() {
         // Required empty public constructor
@@ -48,25 +50,37 @@ public class CompassFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CompassFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CompassFragment newInstance(String param1, String param2) {
+    public static CompassFragment newInstance(Hospital hospital) {
         CompassFragment fragment = new CompassFragment();
         Bundle args = new Bundle();
 
+
+        Gson gson = new Gson();
+        String myJson = gson.toJson(hospital);
+        args.putString(EXTRA_MESSAGE, myJson);
+        
         fragment.setArguments(args);
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             Gson gson = new Gson();
             hospital = gson.fromJson(getArguments().getString(EXTRA_MESSAGE), Hospital.class);
+
+
+            targetLocation=new Location(LocationManager.FUSED_PROVIDER);
+            targetLocation.setLongitude(Double.valueOf(hospital.getLongitude()));
+            targetLocation.setLatitude(Double.valueOf(hospital.getLatitude()));
+
         }
 
     }
@@ -75,14 +89,17 @@ public class CompassFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+         view =  inflater.inflate(R.layout.fragment_compass, container, false);
+
+        textView=view.findViewById(R.id.txtTest);
 
 
-        ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.viewPage);
-        ImageAdapter adapterView = new ImageAdapter(getView().getContext(), hospital);
-        mViewPager.setAdapter(adapterView);
+//        ViewPager mViewPager = (ViewPager) getView().findViewById(R.id.viewPage);
+//        ImageAdapter adapterView = new ImageAdapter(getView().getContext(), hospital);
+//        mViewPager.setAdapter(adapterView);
 
         this.location=new Location(LocationManager.FUSED_PROVIDER);
-        Wherebouts.instance(getView().getContext()).onChange(new Workable<GPSPoint>() {
+        Wherebouts.instance(view.getContext()).onChange(new Workable<GPSPoint>() {
             @Override
             public void work(GPSPoint gpsPoint) {
 
@@ -90,25 +107,45 @@ public class CompassFragment extends Fragment {
 
                     location.setLongitude(gpsPoint.getLocation().getLongitude());
                     location.setLatitude(gpsPoint.getLocation().getLatitude());
+
+
+
+                    double disanceInMeter= location.distanceTo(targetLocation);
+
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(2);
+
+                    if(disanceInMeter> 100){
+
+                        disanceInMeter=disanceInMeter/1000;
+
+                        String distance=df.format(disanceInMeter) + "  كم ";
+                        textView.setText(distance);
+
+                    }else {
+                        String distance=df.format(disanceInMeter) + " متر ";
+                        textView.setText(distance);
+                    }
                 }
 
 
             }
         });
 
+//
+//        sotwLabel = getView().findViewById(R.id.sotw_label);
 
-        sotwLabel = getView().findViewById(R.id.sotw_label);
 
-
-        sotwFormatter = new SOTWFormatter(getView().getContext());
-
-        arrowView = getView().findViewById(R.id.main_image_hands);
+        sotwFormatter = new SOTWFormatter(view.getContext());
+        arrowView = view.findViewById(R.id.main_image_hands);
+        arrowView.setX(3);
 //        sotwLabel = findViewById(R.id.sotw_label);
         setupCompass();
 
 
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_compass, container, false);
+        return view;
     }
 
 
@@ -160,27 +197,14 @@ public class CompassFragment extends Fragment {
         arrowView.startAnimation(an);
     }
 
-    private void adjustSotwLabel(float azimuth) {
-        sotwLabel.setText(sotwFormatter.format(azimuth));
-    }
 
     private Compass.CompassListener getCompassListener() {
         return new Compass.CompassListener() {
             @Override
             public void onNewAzimuth( float azimuth) {
-                // UI updates only in UI thread
-                // https://stackoverflow.com/q/11140285/444966
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
                         float result=azimuth;
                         result -= bearing(location.getLatitude(), location.getLongitude(), targetLocation.getLatitude(), targetLocation.getLongitude());
-
                         adjustArrow(result);
-                        adjustSotwLabel(result);
-                    }
-                });
             }
         };
     }

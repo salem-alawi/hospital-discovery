@@ -29,7 +29,7 @@ public class HospitalDetailActivity extends AppCompatActivity {
     Button callNumber;
     Button messageNumber;
     Hospital hospital;
-    Location location;
+    Button showCompass;
 
 
     private Compass compass;
@@ -50,9 +50,19 @@ public class HospitalDetailActivity extends AppCompatActivity {
 
         callNumber = findViewById(R.id.call);
         messageNumber = findViewById(R.id.txt);
+        showCompass=findViewById(R.id.showCompass);
         Gson gson = new Gson();
         hospital = gson.fromJson(getIntent().getStringExtra(EXTRA_MESSAGE), Hospital.class);
 
+
+        showCompass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CompassFragment compassFragment = CompassFragment.newInstance(hospital);
+                compassFragment.show(getSupportFragmentManager(),"Tagessss");
+//                getFragmentManager().beginTransaction().replace(R.layout.activity_hospital_detail, compassFragment).commit();
+            }
+        });
 
         targetLocation=new Location(LocationManager.FUSED_PROVIDER);
         targetLocation.setLongitude(Double.valueOf(hospital.getLongitude()));
@@ -88,121 +98,8 @@ public class HospitalDetailActivity extends AppCompatActivity {
         ImageAdapter adapterView = new ImageAdapter(this, hospital);
         mViewPager.setAdapter(adapterView);
 
-         this.location=new Location(LocationManager.FUSED_PROVIDER);
-        Wherebouts.instance(HospitalDetailActivity.this).onChange(new Workable<GPSPoint>() {
-            @Override
-            public void work(GPSPoint gpsPoint) {
-
-                if (location.getLatitude() != gpsPoint.getLocation().getLatitude() || location.getLongitude() != gpsPoint.getLocation().getLongitude()) {
-
-                    location.setLongitude(gpsPoint.getLocation().getLongitude());
-                    location.setLatitude(gpsPoint.getLocation().getLatitude());
-                }
-
-
-            }
-        });
-
-
-        sotwLabel = findViewById(R.id.sotw_label);
-
-
-        sotwFormatter = new SOTWFormatter(HospitalDetailActivity.this);
-
-        arrowView = findViewById(R.id.main_image_hands);
-//        sotwLabel = findViewById(R.id.sotw_label);
-        setupCompass();
-
-
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        compass.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        compass.stop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        compass.start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-//        Log.d(TAG, "stop compass");
-        compass.stop();
-    }
-
-
-    private void setupCompass() {
-
-
-        compass = new Compass(this,location, targetLocation);
-        Compass.CompassListener cl = getCompassListener();
-        compass.setListener(cl);
-    }
-
-    private void adjustArrow(float azimuth) {
-//        Log.d(TAG, "will set rotation from " + currentAzimuth + " to "
-//                + azimuth);
-
-        Animation an = new RotateAnimation(-currentAzimuth, -azimuth,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-                0.5f);
-        currentAzimuth = azimuth;
-
-        an.setDuration(500);
-        an.setRepeatCount(0);
-        an.setFillAfter(true);
-
-        arrowView.startAnimation(an);
-    }
-
-    private void adjustSotwLabel(float azimuth) {
-        sotwLabel.setText(sotwFormatter.format(azimuth));
-    }
-
-    private Compass.CompassListener getCompassListener() {
-        return new Compass.CompassListener() {
-            @Override
-            public void onNewAzimuth( float azimuth) {
-                // UI updates only in UI thread
-                // https://stackoverflow.com/q/11140285/444966
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        float result=azimuth;
-                        result -= bearing(location.getLatitude(), location.getLongitude(), targetLocation.getLatitude(), targetLocation.getLongitude());
-
-                        adjustArrow(result);
-                        adjustSotwLabel(result);
-                    }
-                });
-            }
-        };
-    }
-
-
-    protected float bearing(double startLat, double startLng, double endLat, double endLng){
-        double longitude1 = startLng;
-        double longitude2 = endLng;
-        double latitude1 = Math.toRadians(startLat);
-        double latitude2 = Math.toRadians(endLat);
-        double longDiff= Math.toRadians(longitude2-longitude1);
-        double y= Math.sin(longDiff)*Math.cos(latitude2);
-        double x=Math.cos(latitude1)*Math.sin(latitude2)-Math.sin(latitude1)*Math.cos(latitude2)*Math.cos(longDiff);
-
-        return (float) ((Math.toDegrees(Math.atan2(y, x))+360)%360);
-    }
 
 }

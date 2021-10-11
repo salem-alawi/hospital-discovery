@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:paddingBottom="40dp"
+    android:paddingTop="40dp"
+    android:layout_height="match_parent"
     tools:context=".CompassFragment">
 
     <ImageView
@@ -12,9 +14,9 @@
         android:layout_height="316dp"
         android:contentDescription="@string/compass_dial"
         android:src="@drawable/dial"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/main_image_hands"
@@ -23,11 +25,25 @@
         android:contentDescription="@string/compass_hands"
         android:scaleType="fitXY"
         android:src="@drawable/hands"
+        android:visibility="visible"
+
         app:layout_constraintBottom_toBottomOf="@+id/main_image_dial"
         app:layout_constraintEnd_toEndOf="@+id/main_image_dial"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/main_image_dial"
         app:layout_constraintTop_toTopOf="@+id/main_image_dial" />
+
+    <TextView
+        android:id="@+id/txtTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="TextView"
+        android:layout_marginBottom="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_image_dial" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
