@@ -1,4 +1,4 @@
-package com.example.hospitalbookingandroid;
+package com.example.hospitalbookingandroid.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hospitalbookingandroid.R;
+import com.example.hospitalbookingandroid.ServerDomain;
+import com.example.hospitalbookingandroid.adapters.HospitalCardListAdapter;
 import com.example.hospitalbookingandroid.dto.Hospital;
 
 import android.Manifest;
@@ -17,6 +20,9 @@ import android.widget.Toast;
 
 import com.example.hospitalbookingandroid.api.HospitalApi;
 import com.example.hospitalbookingandroid.dto.HospitalResponse;
+import com.example.hospitalbookingandroid.gps.GPSPoint;
+import com.example.hospitalbookingandroid.gps.Wherebouts;
+import com.example.hospitalbookingandroid.gps.Workable;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
+                .baseUrl(ServerDomain.DOMAIN)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();

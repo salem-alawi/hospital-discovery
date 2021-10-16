@@ -1,4 +1,4 @@
-package com.example.hospitalbookingandroid;
+package com.example.hospitalbookingandroid.adapters;
 
 
 import android.content.Context;
@@ -19,9 +19,8 @@ import java.util.Optional;
 
 public class ImageAdapter extends PagerAdapter {
     Context mContext;
-    Hospital hospital;
     List<String> listOfImage=new ArrayList<>();
-    ImageAdapter(Context context, Hospital hospital) {
+    public ImageAdapter(Context context, Hospital hospital) {
         this.mContext = context;
         listOfImage.add(hospital.getHospitalStaticConfig().getCoverImage());
        if(hospital.getHospitalStaticConfig().getCoverImage()!=null){
@@ -53,7 +52,6 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         return this.listOfImage.size();
-//        return hospital.getHospitalStaticConfig().getImages().size();
-//        return hospital.getHospitalStaticConfig().getImages().size();
+
     }
 }

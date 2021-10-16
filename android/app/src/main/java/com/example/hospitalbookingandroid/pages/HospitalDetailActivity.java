@@ -1,26 +1,37 @@
-package com.example.hospitalbookingandroid;
+package com.example.hospitalbookingandroid.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.hospitalbookingandroid.ServerDomain;
+import com.example.hospitalbookingandroid.adapters.ImageAdapter;
+import com.example.hospitalbookingandroid.R;
+import com.example.hospitalbookingandroid.adapters.SectionCardListAdapter;
+import com.example.hospitalbookingandroid.api.HospitalApi;
 import com.example.hospitalbookingandroid.dto.Hospital;
+import com.example.hospitalbookingandroid.dto.HospitalSection;
+import com.example.hospitalbookingandroid.CompassFragment;
 import com.google.gson.Gson;
+
+import java.util.List;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HospitalDetailActivity extends AppCompatActivity {
 
@@ -30,14 +41,12 @@ public class HospitalDetailActivity extends AppCompatActivity {
     Button messageNumber;
     Hospital hospital;
     Button showCompass;
+    SectionCardListAdapter sectionCardListAdapter;
+    List<HospitalSection> hospitalSectionList;
+    private RecyclerView mRecyclerView;
 
+    HospitalApi service;
 
-    private Compass compass;
-    private ImageView arrowView;
-    private TextView sotwLabel;  // SOTW is for "side of the world"
-
-    private float currentAzimuth;
-    private SOTWFormatter sotwFormatter;
 
     Location targetLocation;
     @Override
@@ -47,7 +56,10 @@ public class HospitalDetailActivity extends AppCompatActivity {
 
 
 
+        mRecyclerView= findViewById(R.id.rv_sections);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         callNumber = findViewById(R.id.call);
         messageNumber = findViewById(R.id.txt);
         showCompass=findViewById(R.id.showCompass);
@@ -97,6 +109,33 @@ public class HospitalDetailActivity extends AppCompatActivity {
         ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPage);
         ImageAdapter adapterView = new ImageAdapter(this, hospital);
         mViewPager.setAdapter(adapterView);
+
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ServerDomain.DOMAIN)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        service = retrofit.create(HospitalApi.class);
+        Call<List<HospitalSection>> responseCall= service.findAllHospitalSection(hospital.getId().toString());
+        responseCall.enqueue(new Callback<List<HospitalSection>>() {
+            @Override
+            public void onResponse(Call<List<HospitalSection>> call, Response<List<HospitalSection>> response) {
+                if (response.isSuccessful()) {
+                    hospitalSectionList = response.body();
+                    sectionCardListAdapter = new SectionCardListAdapter(hospitalSectionList, HospitalDetailActivity.this);
+                    mRecyclerView.setAdapter(sectionCardListAdapter);
+                    mRecyclerView.requestLayout();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<HospitalSection>> call, Throwable t) {
+                Toast.makeText(HospitalDetailActivity.this,"حدث حخطى انثاء الاتصال بلخادم",Toast.LENGTH_SHORT);
+            }
+        });
+
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.hospitalbookingandroid;
+package com.example.hospitalbookingandroid.gps;
 
 
 import android.content.Context;

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HospitalDetailActivity">
+    tools:context=".pages.HospitalDetailActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPage"
-        android:layout_width="413dp"
-        android:layout_height="219dp"
+        android:layout_width="414dp"
+        android:layout_height="195dp"
 
         android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,6 +55,21 @@
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toEndOf="@+id/txt"
         app:layout_constraintTop_toBottomOf="@+id/viewPage" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sections"
+        android:layout_width="407dp"
+        android:layout_height="397dp"
+        android:layout_margin="14dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/section_list_item" />
+    tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="292dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

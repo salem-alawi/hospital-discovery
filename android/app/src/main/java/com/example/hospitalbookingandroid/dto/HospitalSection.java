@@ -1,6 +1,7 @@
 package com.example.hospitalbookingandroid.dto;
 
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -8,9 +9,18 @@ public class HospitalSection {
 
     private UUID id;
 
-    private Hospital hospital;
-
     private Section section;
+    private List<Doctor> doctors;
+
+    public List<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
+    }
+
+    //    private DoctorCertificationJson doctorCertificationJson;
 
     public UUID getId() {
         return id;
@@ -20,14 +30,6 @@ public class HospitalSection {
         this.id = id;
     }
 
-    public Hospital getHospital() {
-        return hospital;
-    }
-
-    public void setHospital(Hospital hospital) {
-        this.hospital = hospital;
-    }
-
     public Section getSection() {
         return section;
     }
@@ -35,4 +37,12 @@ public class HospitalSection {
     public void setSection(Section section) {
         this.section = section;
     }
+
+//    public DoctorCertificationJson getDoctorCertificationJson() {
+//        return doctorCertificationJson;
+//    }
+//
+//    public void setDoctorCertificationJson(DoctorCertificationJson doctorCertificationJson) {
+//        this.doctorCertificationJson = doctorCertificationJson;
+//    }
 }

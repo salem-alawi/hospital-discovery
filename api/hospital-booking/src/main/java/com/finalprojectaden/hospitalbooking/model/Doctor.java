@@ -1,5 +1,6 @@
 package com.finalprojectaden.hospitalbooking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.finalprojectaden.hospitalbooking.dto.admin.doctors.CreateNewDoctor;
 import com.finalprojectaden.hospitalbooking.dto.admin.doctors.UpdateDoctor;
 import com.finalprojectaden.hospitalbooking.model.json.DoctorCertificationJson;
@@ -33,10 +34,12 @@ public class Doctor {
     @Column(name = "about")
     private String about;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "hospital_section_id")
     private HospitalSection hospitalSectionId;

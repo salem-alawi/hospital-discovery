@@ -1,4 +1,4 @@
-package com.example.hospitalbookingandroid;
+package com.example.hospitalbookingandroid.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hospitalbookingandroid.pages.HospitalDetailActivity;
+import com.example.hospitalbookingandroid.R;
 import com.example.hospitalbookingandroid.dto.Hospital;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -100,9 +102,9 @@ public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardLi
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            hospitalName =  view.findViewById(R.id.txt_hospitalName);
-            hospitalLocation = view.findViewById(R.id.txt_distance);
-            hospitalImage= view.findViewById(R.id.img_hospital);
+            hospitalName =  view.findViewById(R.id.txtSectionName);
+            hospitalLocation = view.findViewById(R.id.txtDoctorNo);
+            hospitalImage= view.findViewById(R.id.img_section);
         }
         @Override
         public String toString() {
