@@ -25,6 +25,7 @@ import com.example.hospitalbookingandroid.gps.Wherebouts;
 import com.example.hospitalbookingandroid.gps.Workable;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ServerDomain.DOMAIN)
+                .baseUrl("http://"+ServerDomain.IP+":8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<HospitalResponse> call, Response<HospitalResponse> response) {
                 if (response.isSuccessful()) {
                     hospitalList = response.body().getContent();
+
                     adapter = new HospitalCardListAdapter(hospitalList, currentLocation, MainActivity.this);
                     mRecyclerView.setAdapter(adapter);
                     mRecyclerView.requestLayout();

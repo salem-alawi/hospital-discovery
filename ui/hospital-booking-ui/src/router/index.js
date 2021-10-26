@@ -5,13 +5,13 @@ import HospitalDetailScreenAdmin
 import AdminHome from "../screen/AdminHome/AdminHome";
 import HospitalListScreenAdmin from "../screen/AdminHome/HospitalListScreenAdmin/HospitalListScreenAdmin";
 import SectionListScreenAdmin from "../screen/AdminHome/SectionListScreenAdmin/SectionListScreenAdmin";
-import EditHospitalScreen
-    from "@/screen/AdminHome/HospitalListScreenAdmin/HospitalDetailScreenAdmin/EditHospitalScreen/EditHospitalScreen";
-// import MainHome from "../screen/main/MainHome";
+import EditHospitalScreen from "@/screen/AdminHome/HospitalListScreenAdmin/HospitalDetailScreenAdmin/EditHospitalScreen/EditHospitalScreen";
 import AdminLogin from "../screen/AdminLogin";
 import AllPublicHospital from "../screen/main/AllPublicHospital";
 import MainHome from "../screen/main/MainHome";
 import HospitalDetailPublic from "../screen/main/HospitalDetailPublic";
+import HospitalSectionPublicView from "@/screen/main/HospitalSectionPublicView";
+
 
 Vue.use(VueRouter);
 
@@ -22,6 +22,12 @@ const routes = [
         component: MainHome,
         redirect: '/hospitals',
         children: [
+            {
+                path:  'hospitals/:id/sections/:sectionId',
+                name: 'HospitalSection',
+                component: HospitalSectionPublicView,
+                props: true
+            },
             {
                 path: "hospitals/:id",
                 name: "hospitalsDetailPublic",

@@ -62,7 +62,6 @@ export default {
     initial() {
 
       HospitalService.findAllPublicHospital().then((resp) => {
-        console.log(resp)
         if (resp.status === 200) {
           this.allPublicHospital = resp.data.content;
         }
@@ -73,7 +72,7 @@ export default {
 
   },
   mounted() {
-    console.log('ddddd')
+
     this.initial();
   }
 

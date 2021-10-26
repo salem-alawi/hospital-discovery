@@ -17,56 +17,57 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.004" />
+        app:layout_constraintVertical_bias="0.004" >
 
-    <Button
-        android:id="@+id/call"
-        android:layout_width="94dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="20dp"
+    </androidx.viewpager.widget.ViewPager>
 
-        android:backgroundTint="#4CAF50"
-
-        android:text="اتصل"
-        app:layout_constraintEnd_toStartOf="@+id/txt"
-        app:layout_constraintHorizontal_bias="0.582"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPage" />
-
-    <Button
-        android:id="@+id/txt"
-        android:layout_width="104dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="144dp"
-        android:backgroundTint="#03A9F4"
-        android:text="ارسل رساله"
-        android:textColorHint="#009688"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPage" />
-
-    <Button
-        android:id="@+id/showCompass"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="الموقع"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toEndOf="@+id/txt"
-        app:layout_constraintTop_toBottomOf="@+id/viewPage" />
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintTop_toBottomOf="@+id/viewPage"
+        tools:layout_editor_absoluteX="-2dp">
+
+        <Button
+            android:id="@+id/showCompass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:text="الموقع" />
+
+        <Button
+            android:id="@+id/call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+
+            android:layout_weight="1"
+            android:backgroundTint="#4CAF50"
+            android:text="اتصل" />
+
+        <Button
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="#03A9F4"
+            android:text="ارسل رساله"
+            android:textColorHint="#009688" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sections"
         android:layout_width="407dp"
         android:layout_height="397dp"
         android:layout_margin="14dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt"
-        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/section_list_item" />
     tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="292dp" />

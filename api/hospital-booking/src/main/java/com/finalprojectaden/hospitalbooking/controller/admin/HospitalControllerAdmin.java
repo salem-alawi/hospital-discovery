@@ -8,6 +8,7 @@ import com.finalprojectaden.hospitalbooking.service.DoctorService;
 import com.finalprojectaden.hospitalbooking.service.HospitalSectionService;
 import com.finalprojectaden.hospitalbooking.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,9 @@ public class HospitalControllerAdmin extends AdminBaseController {
 
     @GetMapping("/hospitals")
     public ResponseEntity findAllHospitalAdmin(Pageable pageable) {
-        return new ResponseEntity(this.hospitalService.findAllHospital(pageable), HttpStatus.OK);
+       Page<Hospital> hospitalPage=this.hospitalService.findAllHospital(pageable);
+
+        return new ResponseEntity(hospitalPage, HttpStatus.OK);
     }
 
     @PostMapping("/hospitals")

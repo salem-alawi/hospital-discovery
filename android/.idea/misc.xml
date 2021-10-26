@@ -5,10 +5,11 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.26510416666666664" />
-        <entry key="app/src/main/res/layout/activity_hospital_detail.xml" value="0.2877906976744186" />
+        <entry key="app/src/main/res/layout/activity_hospital_detail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14387031408308004" />
         <entry key="app/src/main/res/layout/activity_section_detail.xml" value="0.1125" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/doctor_list_item.xml" value="0.125" />
         <entry key="app/src/main/res/layout/fragment_compass.xml" value="0.18795289855072464" />
         <entry key="app/src/main/res/layout/hospital_list_item.xml" value="0.1265625" />
         <entry key="app/src/main/res/layout/section_list_item.xml" value="0.165" />

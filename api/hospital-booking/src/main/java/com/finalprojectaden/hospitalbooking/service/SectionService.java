@@ -19,9 +19,9 @@ public class SectionService {
     @Autowired
     private SectionRepository sectionRepository;
 
-   Supplier<ItemNotFoundException> NOT_FOUND=()-> {
-       return new ItemNotFoundException("can't find resource");
-   };
+    Supplier<ItemNotFoundException> NOT_FOUND = () -> {
+        return new ItemNotFoundException("can't find resource");
+    };
 
     public Page<Section> findAll(Pageable pageable) {
 
@@ -36,14 +36,16 @@ public class SectionService {
 
     public Section createNewSection(CreateNewSection createNewSection) {
 
-        Section section=new Section(createNewSection);
+        Section section = new Section(createNewSection);
 
         return this.sectionRepository.save(section);
     }
 
     public List<Section> findAllExceptListOfId(List<String> hospitalSectionList) {
-
-        return this.sectionRepository.findAllExceptionListOfId(hospitalSectionList);
+        if (hospitalSectionList.size() > 0)
+            return this.sectionRepository.findAllExceptionListOfId(hospitalSectionList);
+        else
+            return this.sectionRepository.findAllSection();
 
     }
 }

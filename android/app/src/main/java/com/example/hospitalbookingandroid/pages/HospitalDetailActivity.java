@@ -113,7 +113,7 @@ public class HospitalDetailActivity extends AppCompatActivity {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ServerDomain.DOMAIN)
+                .baseUrl("http://"+ServerDomain.IP +":8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();

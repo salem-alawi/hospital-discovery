@@ -1,4 +1,7 @@
+
+
 spring:
+
   servlet:
     multipart:
       enabled: true # enable support of multipart uploads. [true]
@@ -11,8 +14,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
     hibernate:
-
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
   datasource:
     url: jdbc:mysql://localhost:3306/hospital_discovery?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
@@ -22,4 +24,5 @@ spring:
       minimum-idle: 10
       idle-timeout: 10000
       maximum-pool-size: 30
-
+server:
+  port: 8444

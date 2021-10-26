@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.List;
 
 public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardListAdapter.ViewHolder> {
@@ -32,9 +33,38 @@ public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardLi
 
     //        private MessagesService.MessageInterface messageInterface;
     public HospitalCardListAdapter(List<Hospital> messages, Location currentLocation, Context context) {
-        messagesList = messages;
+
         location=currentLocation;
         this.context=context;
+
+
+        messagesList = messages;
+
+        Collections.sort(messagesList, (o1, o2) -> {
+
+
+            Location oo1=new Location(LocationManager.GPS_PROVIDER);
+            oo1.setLatitude(Double.valueOf(o1.getLatitude()));
+            oo1.setLongitude(Double.valueOf(o1.getLongitude()));
+
+            int dis1=   Math.round(  location.distanceTo(oo1));
+
+
+
+            Location oo2=new Location(LocationManager.GPS_PROVIDER);
+            oo2.setLatitude(Double.valueOf(o2.getLatitude()));
+            oo2.setLongitude(Double.valueOf(o2.getLongitude()));
+
+            int dis2=    Math.round( location.distanceTo(oo2));
+            int reslut= dis1-dis2;
+
+
+            return reslut;
+
+
+
+        });
+
     }
 
     @Override

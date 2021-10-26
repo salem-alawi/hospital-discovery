@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.hospitalbookingandroid.ServerDomain;
 import com.example.hospitalbookingandroid.dto.Hospital;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ImageAdapter extends PagerAdapter {
     Context mContext;
@@ -39,7 +39,8 @@ public class ImageAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Picasso.get().load(this.listOfImage.get(position).replace("127.0.0.1","10.0.2.2")).into(imageView);
+        Picasso.get().load(this.listOfImage.get(position).replace("127.0.0.1",
+                ServerDomain.IP)).into(imageView);
         ((ViewPager) container).addView(imageView, 0);
         return imageView;
     }

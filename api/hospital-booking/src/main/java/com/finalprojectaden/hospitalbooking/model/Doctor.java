@@ -62,6 +62,10 @@ public class Doctor {
 
     }
 
+    public UUID getHospitalSectionId2(){
+        return this.hospitalSectionId.getId();
+    }
+
     public void update(UpdateDoctor updateDoctor, HospitalSection hospitalSection) {
         this.name = updateDoctor.getName();
         this.about = updateDoctor.getAbout();

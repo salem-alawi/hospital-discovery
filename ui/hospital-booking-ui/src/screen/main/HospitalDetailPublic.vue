@@ -43,8 +43,12 @@
   <h3>الاقسام</h3>
 </div>
 
-    <div class="d-flex flex-wrap justify-center" style="background-color: rgba(211,211,211,0.27);border-radius:18px;margin: 20px;">
-      <HospitalSectionPublic style="width: 300px" v-for="section in sections" :key="section.id" :hospital-section="section" />
+    <div class="d-flex flex-wrap justify-lg-space-around"  style="background-color: rgba(211,211,211,0.27);border-radius:18px;margin: 20px;">
+      <div v-for="section in sections" :key="section.id" >
+        <router-link  style="text-decoration: none" :to="'/hospitals/'+hospital.id+'/sections/'+section.id" >
+        <HospitalSectionPublic style="width: 300px"  :hospital-section="section" />
+        </router-link>
+      </div>
     </div>
 
 

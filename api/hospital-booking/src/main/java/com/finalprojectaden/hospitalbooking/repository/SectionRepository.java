@@ -17,7 +17,11 @@ public interface SectionRepository extends PagingAndSortingRepository<Section, U
     @Query(value = "select * from sections where section_id=:sectionId ",nativeQuery = true)
     Optional<Section> findById(@Param("sectionId") String sectionId);
 
-    @Query(value = "select * from sections where section_id  not in :sectionId",nativeQuery = true)
+    @Query(value = "select * from sections where section_id  not in (:sectionId)",nativeQuery = true)
     List<Section> findAllExceptionListOfId(@Param("sectionId") List<String> sectionId);
+
+    @Query(value = "select * from sections",nativeQuery = true)
+    List<Section> findAllSection();
+
 
 }
