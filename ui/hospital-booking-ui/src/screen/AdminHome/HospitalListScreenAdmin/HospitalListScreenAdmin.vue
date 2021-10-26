@@ -63,6 +63,8 @@
     import axios from 'axios'
     import CreateNewHospital from '../../../dialogs/CreateNewHospital/CreateNewHospital';
 
+
+
     export default {
 
         data: () => ({
@@ -95,7 +97,7 @@
                 this.locationDialog = true;
             },
             initialize() {
-                axios.get('http://127.0.0.1:8080/admin/hospitals?size=100').then(resp => {
+                axios.get('http://52.36.50.145:8444/admin/hospitals?size=100').then(resp => {
                     this.loadAllHospitals(resp.data.content);
                 });
             }
