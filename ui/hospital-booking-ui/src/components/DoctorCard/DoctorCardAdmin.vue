@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ hospitalSectionId }}
     <v-card
         class="mx-auto my-12"
         max-width="274"
@@ -17,7 +16,7 @@
       <v-card-title>
         {{ doctor.about }}
       </v-card-title>
-      <v-card-actions>
+      <v-card-actions v-if="edit==true">
         <v-icon style="cursor: pointer" @click="removeDoctors()">
           {{ icons.mdiDelete }}
         </v-icon>
@@ -28,7 +27,7 @@
     </v-card>
 
 
-       
+
       <v-row justify="center">
         <v-dialog
             v-model="updateDoctorDialog"
@@ -86,7 +85,7 @@
               <v-select
                   item-value="id"
                   item-text="section.name"
-                  v-model="doctor.hospitalSectionId.id"
+                  v-model="doctor.hospitalSectionId2"
                   :items="allHospitalSection"
                   label="القسم"
               ></v-select>
@@ -105,12 +104,12 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-    
-    
- 
- 
- 
       </v-row>
+
+
+
+
+
   </div>
 </template>
 
@@ -129,7 +128,7 @@ import UploadFilesService from '../../service/UploadFilesService';
 
 
 export default {
-  props: ['doctor'],
+  props: ['doctor','hospitalId','edit'],
   data: () => {
     return {
        ile: null,
@@ -196,7 +195,7 @@ export default {
 
 
 console.log('section======')
-   HospitalSectionService.findAllByHospitalId(this.doctor.hospital.id).then(resp => {
+   HospitalSectionService.findAllByHospitalId(this.hospitalId).then(resp => {
 
 console.log('section======')
 console.log(resp.data)

@@ -177,9 +177,7 @@
             </div>
             <div class="d-flex flex-wrap justify-center">
               <div style="width: 300px;" v-for="doctor in doctors" :key="doctor.id">
-
-                <DoctorCardAdmin :doctor="doctor"/>
-
+                <DoctorCardAdmin :edit="true" :doctor="doctor" :hospital-id="hospital.id"/>
               </div>
             </div>
 

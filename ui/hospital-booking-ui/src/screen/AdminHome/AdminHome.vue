@@ -6,7 +6,7 @@
       <v-app>
         <v-app-bar style="background-color: #EE534F" app>
           <!-- -->
-          <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+<!--          <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>-->
 
           <h1>مدير النطام العام</h1>
         </v-app-bar>

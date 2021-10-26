@@ -297,6 +297,5 @@ export default {
   mounted() {
     this.initialize();
   }
-}
-;
+};
 </script>
