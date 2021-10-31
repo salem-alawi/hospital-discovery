@@ -42,7 +42,7 @@ public class SectionCardListAdapter extends RecyclerView.Adapter<SectionCardList
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = messagesList.get(position);
         holder.txtSectionName.setText(messagesList.get(position).getSection().getName());
-        Picasso.get().load(holder.mItem.getSection().getCoverImage()).into(holder.img_section);
+        Picasso.get().load(holder.mItem.getSection().getCoverImage().replace("127.0.0.1","10.0.2.2")).into(holder.img_section);
         holder.txtDoctorNo.setText(  holder.mItem.getDoctors().size()+ " طبيب");
 
 

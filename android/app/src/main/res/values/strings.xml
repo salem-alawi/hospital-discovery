@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HospitalBookingAndroid</string>
+    <string name="app_name">Hospital Guide</string>
 
     <string name="fetch_address">Fetch address</string>
     <string name="no_geocoder_available">No geocoder available</string>

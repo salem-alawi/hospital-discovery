@@ -10,6 +10,7 @@
         </div>
       </v-card-title>
       <v-img
+          contain="contain"
           height="150"
           :src="doctor.image"
       ></v-img>
@@ -78,6 +79,7 @@
               <v-textarea
                   style="margin-top: 20px"
                   outlined
+                  class="crop"
                   v-model="doctor.about"
                   label="معلومات عن الطبيب"
                   required
@@ -113,7 +115,11 @@
   </div>
 </template>
 
+<style>
 
+.crop {overflow:hidden;height:50px}
+
+</style>
 <script>
 
 

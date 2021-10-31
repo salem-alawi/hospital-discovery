@@ -40,7 +40,7 @@ public class ImageAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Picasso.get().load(this.listOfImage.get(position).replace("127.0.0.1",
-                ServerDomain.IP)).into(imageView);
+                "10.0.2.2")).into(imageView);
         ((ViewPager) container).addView(imageView, 0);
         return imageView;
     }

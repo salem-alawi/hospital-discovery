@@ -28,7 +28,7 @@ public class FileUploadController {
     public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file) {
 
         String path = storageService.store(file);
-        path = "http://127.0.0.1:8080/files/" + path;
+        path = "http://127.0.0.1:8444/files/" + path;
         FileResponse fileResponse = new FileResponse();
         fileResponse.setName(path);
 

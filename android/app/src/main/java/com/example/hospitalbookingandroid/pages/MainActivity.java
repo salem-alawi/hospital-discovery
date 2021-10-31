@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://"+ServerDomain.IP+":8080/")
+                .baseUrl("http://"+ServerDomain.IP+"/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
@@ -78,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<HospitalResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"حدث حخطى انثاء الاتصال بلخادم",Toast.LENGTH_SHORT);
+
+                Toast.makeText(MainActivity.this,"حدث حخطى انثاء الاتصال بلخادم",Toast.LENGTH_SHORT).show();
             }
         });
 

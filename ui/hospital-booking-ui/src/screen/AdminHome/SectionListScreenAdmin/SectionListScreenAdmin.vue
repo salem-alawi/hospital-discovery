@@ -202,7 +202,7 @@
                 console.log(id);
             },
             initialize() {
-                axios.get('http://52.36.50.145:8091/admin/sections?size=100').then(resp => {
+                axios.get('http://127.0.0.1:8444/admin/sections?size=100').then(resp => {
                     this.loadAllSections(resp.data.content);
                 });
             }

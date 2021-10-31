@@ -80,7 +80,7 @@ public class HospitalCardListAdapter extends RecyclerView.Adapter<HospitalCardLi
         holder.hospitalName.setText(messagesList.get(position).getName());
 
 
-        Picasso.get().load(holder.mItem.getHospitalStaticConfig().getCoverImage()).into(holder.hospitalImage);
+        Picasso.get().load(holder.mItem.getHospitalStaticConfig().getCoverImage().replace("127.0.0.1","10.0.2.2")).into(holder.hospitalImage);
 
         Location hospitalLocation=new Location(LocationManager.GPS_PROVIDER);
         hospitalLocation.setLatitude(Double.valueOf(holder.mItem.getLatitude()));

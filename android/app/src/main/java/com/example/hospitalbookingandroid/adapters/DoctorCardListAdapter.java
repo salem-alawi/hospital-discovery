@@ -49,7 +49,7 @@ public class DoctorCardListAdapter extends RecyclerView.Adapter<DoctorCardListAd
         holder.mItem = messagesList.get(position);
         holder.text_doctor_name.setText(Optional.ofNullable(messagesList.get(position).getName()).orElse(" لا يوجد"));
         holder.txt_doctor_about.setText(Optional.ofNullable(messagesList.get(position).getAbout()).orElse(" لا يوجد"));
-        Picasso.get().load(holder.mItem.getImage()).into(holder.img_doctor_image);
+        Picasso.get().load(holder.mItem.getImage().replace("127.0.0.1","10.0.2.2")).into(holder.img_doctor_image);
     }
 
     @Override
